@@ -1,0 +1,5 @@
+*.png
+RESULTS_FOLDER_NAME/*
+.python-version
+.idea/*
+.DS_Store
