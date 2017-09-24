@@ -9,3 +9,10 @@ python3 execute.py <path_to_video>
 
 If need more then one version of python running on the machine, use:
 https://stackoverflow.com/questions/18671253/how-can-i-use-homebrew-to-install-both-python-2-and-3-on-mac
+
+
+To run backend on local:
+pip install -r requirements.txt
+cd backend && python manage.py runserver
+
+Then you can access the web page on local at http://127.0.0.1:8000/
