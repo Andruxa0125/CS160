@@ -13,11 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+# Django imports
+from django.conf.urls import include, url
 from django.contrib import admin
-from facefinder import views
+from django.contrib.auth import views
+from django.conf.urls.static import static
+from django.conf import settings
+
+# My imports
+from facefinder.forms import LoginForm
+
+
+from facefinder import views as my_views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index, name='index')
-]
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name='login'),
+    url(r'^logout/$', views.logout, {'next_page': '/login'}),
+    url(r'^signup/$', my_views.signup, name='signup'),
+    url(r'^$', my_views.home, name='home'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
