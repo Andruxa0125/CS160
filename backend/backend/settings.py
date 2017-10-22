@@ -26,7 +26,7 @@ LOGIN_REDIRECT_URL = '/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'0.0.0.0', 'facefinder68.herokuapp.com']
+ALLOWED_HOSTS = [u'0.0.0.0', 'facefinder68.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -139,7 +139,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, '/static'),
+    os.path.join(BASE_DIR, '/backend/static'),
 )
 
 
