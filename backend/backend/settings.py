@@ -26,7 +26,7 @@ LOGIN_REDIRECT_URL = '/'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [u'0.0.0.0']
+ALLOWED_HOSTS = [u'0.0.0.0', 'facefinder68.herokuapp.com']
 
 
 # Application definition
