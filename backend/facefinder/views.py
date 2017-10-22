@@ -9,9 +9,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 # My Imports
-from forms import SignUpForm
-from forms import NewVideoForm
-from models import Video
+from .forms import SignUpForm
+from .forms import NewVideoForm
+from .models import Video
 
 @login_required(login_url="login/")
 def home(request):

@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 # My imports
-from models import Video
+from .models import Video
 
 # If you don't do this you cannot use Bootstrap CSS
 class LoginForm(AuthenticationForm):
