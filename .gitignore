@@ -5,3 +5,4 @@ RESULTS_FOLDER_NAME/*
 .DS_Store
 __pycache__/*
 *.pyc
+*.pyc
