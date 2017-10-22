@@ -10,7 +10,7 @@
             <h2>Upload your video for analysis</h2>
               <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form.video }}
                 <button type="submit">Upload</button>
               </form>
         </div>
