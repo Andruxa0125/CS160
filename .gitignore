@@ -6,3 +6,5 @@ RESULTS_FOLDER_NAME/*
 __pycache__/*
 *.pyc
 *.pyc
+/secret.sh
+secret.sh

@@ -72,15 +72,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 
+DB_USER = os.environ.get('CS160_DB_USER_POSTGRES', 'postgres')
+DB_PASSWORD = os.environ.get('CS160_DB_USER_PASSWORD', 'postgres')
+DB_HOST = os.environ.get('CS160_DB_USER_HOST','localhost')
+
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
         'PORT': '5432',
     }
 }
