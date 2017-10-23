@@ -1,0 +1,10 @@
+*.png
+RESULTS_FOLDER_NAME/*
+.python-version
+.idea/*
+.DS_Store
+__pycache__/*
+*.pyc
+*.pyc
+/secret.sh
+secret.sh

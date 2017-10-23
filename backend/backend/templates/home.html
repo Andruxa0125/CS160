@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load tz %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="jumbotron">
+            <h2>Upload your video for analysis</h2>
+              <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.video }}
+                <button type="submit">Upload</button>
+              </form>
+        </div>
+    </div>
+</div>
+    {% if videos|length > 0 %}
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Original Image</th>
+                  <th scope="col">Final Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for video in videos %}
+                <tr>
+                    <td class="col-md-2">{{video.uploaded_at|timezone:"America/Los_Angeles"}}</td>
+                    <td class="col-md-5">
+                        <img src="{{video.video.url}}" class="img-thumbnail" style="width:50%">
+                    </td>
+                    <td class="col-md-5">
+                        <img src="{{video.video.url}}" class="img-thumbnail" style="width:50%">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+{% if user.is_authenticated %}
+    $("#signup-btn").css("display","none");
+{% endif %}
+</script>
+
+{% endblock %}
