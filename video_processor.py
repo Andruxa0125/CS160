@@ -3,6 +3,7 @@ import re
 import os
 import shutil
 import sys
+import glob
 #https://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
 #ffmpeg -r 20.0 -start_number 1 -f image2 -i "pic%d.png" -vcodec mjpeg -i sample.mp3 -qscale 1 attempt.avi
 # get audio from video ffmpeg -i input-video.avi -vn -acodec copy output-audio.aac
@@ -14,13 +15,14 @@ class videoReader():
     BASE_PICTURE_NAME = "pic"
     AUDIO_VIDEO_NAME = "result"
     DEFAULT_AUDIO_EXTENSION = ".mp3"
+    BASE_PICTURE_EXTENSION = "jpg"
 
     #COMMANDS THAT WILL BE ISSUED
     FRAME_RATE_COMMAND = ("ffprobe -v error -select_streams v:0 " \
                          "-show_entries stream=avg_frame_rate " \
                          "-of default=noprint_wrappers=1:nokey=1 ")
-    EXTRACT_COMMAND = ("ffmpeg -i %s -vf fps=%s %s%%d.png")
-    CREATE_VIDEO_COMMAND = ('ffmpeg -r %s -start_number 1 -f image2 -i "%s%%d.png" -i %s -vcodec mjpeg -qscale 1 %s.avi')
+    EXTRACT_COMMAND = ("ffmpeg -i %s -vf fps=%s %s%%d.jpg")
+    CREATE_VIDEO_COMMAND = ('ffmpeg -r %s -start_number 1 -f image2 -i "%s%%d.jpg" -i %s -vcodec mjpeg -qscale 1 %s.avi')
     CREATE_AUDIO_COMMAND = ('ffmpeg -i %s -q:a 0 -map a %s%s')
 
     #REGEX NEEDED TO GET FRAME RATE AS DOUBLE
@@ -31,7 +33,6 @@ class videoReader():
         After initializing videoReader object, path to the video will
         be saved and all function will operate on that path.
         The path to the video has to be either absolute or relative.
-
         """
         if(not os.path.isfile(path_to_video)):
             raise Exception("The path to the video doesn't exist")
@@ -83,6 +84,7 @@ class videoReader():
         Based on the path to video, this function will create
         frames with the following names 
         BASE_PICTURE_NAME%d.png in folder ./RESULTS_FOLDER_NAME
+        returns the number of generates frames.
         """
         self.frame_rate = self.get_frame_rate(self.path_to_video)
         frame_dir = os.path.join(self.resulting_folder_path, videoReader.BASE_PICTURE_NAME)
@@ -91,6 +93,8 @@ class videoReader():
         print("Issuing following command generate frames:\n" + cmd + "\n")
         command = execute.command()
         command.execute(cmd)
+        return len(glob.glob1(self.resulting_folder_path,"*.png"))
+
 
     def get_frame_rate(self, path_to_video):
         """
@@ -124,14 +128,15 @@ class videoReader():
             result = float("{0:.2f}".format(result))
         return result
 
+if __name__ == "__main__":
+    path_to_video = ''
+    if(len(sys.argv) == 1):
+        raise Exception("The program needs path to the video")
+    else:
+        path_to_video = sys.argv[1]
 
-path_to_video = ''
-if(len(sys.argv) == 1):
-    raise Exception("The program needs path to the video")
-else:
-    path_to_video = sys.argv[1]
+    videoReader  = videoReader(path_to_video)
+    frames_number = videoReader.generate_frames()
+    videoReader.create_audio()
 
-videoReader  = videoReader(path_to_video)
-videoReader.generate_frames()
-videoReader.create_audio()
-videoReader.create_video()
+    videoReader.create_video()

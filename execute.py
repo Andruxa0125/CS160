@@ -9,7 +9,7 @@ class command():
 
         proc = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
         try:
-            outs, errs = proc.communicate(timeout=10)
+            outs, errs = proc.communicate(timeout=100)
         except subprocess.TimeoutExpired:
             proc.kill()
             outs, errs = proc.communicate()
