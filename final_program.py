@@ -4,7 +4,7 @@ import video_processor
 path_to_video = './CS160Local/selfie.avi'
 THREAD_NUM = 4
 
-videoReader  = video_processor.videoReader(path_to_video)
+videoReader = video_processor.videoReader(path_to_video)
 number_of_frames = videoReader.generate_frames()
 videoReader.create_audio()
 number_of_frames = 900

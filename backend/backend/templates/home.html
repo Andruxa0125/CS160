@@ -31,10 +31,14 @@
                 <tr>
                     <td class="col-md-2">{{video.uploaded_at|timezone:"America/Los_Angeles"}}</td>
                     <td class="col-md-5">
-                        <img src="{{video.video.url}}" class="img-thumbnail" style="width:50%">
+                        <video controls width="320" height="240">
+                            <source src="{{video.video.url}}" type="video/mp4">
+                        </video>
                     </td>
                     <td class="col-md-5">
-                        <img src="{{video.video.url}}" class="img-thumbnail" style="width:50%">
+                        <video controls width="320" height="240">
+                            <source src="{{video.video.url}}" type="video/mp4">
+                        </video>
                     </td>
                 </tr>
                 {% endfor %}
