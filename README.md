@@ -16,3 +16,10 @@ pip install -r requirements.txt
 cd backend && python manage.py runserver
 
 Then you can access the web page on local at http://127.0.0.1:8000/
+
+Andrey Lubenets
+Back end:
+To run the final version of back end, you have to issue following command:
+python3 final_program.py
+At this moment, the path to the file is indicated in this file, but it will be changed to be passed as a parameter soon.
+You will have to install different packages such as dlib, ffmpeg, and others.
