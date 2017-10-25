@@ -17,7 +17,8 @@ cd backend && python manage.py runserver
 
 Then you can access the web page on local at http://127.0.0.1:8000/
 
-Andrey Lubenets
+# Andrey Lubenets
+
 Back end:
 To run the final version of back end, you have to issue following command:
 python3 final_program.py
