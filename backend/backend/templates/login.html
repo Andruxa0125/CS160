@@ -1,46 +1,31 @@
-{% extends 'base.html' %}
-
+{% extends 'header.html' %}
+{% load staticfiles %}
 
 {% block content %}
-    {% if form.errors %}
-
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-
-<p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-
-<p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
 
 <div class="container">
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="login-panel panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Please Sign In</h3>
+                    <h3 class="panel-title">Log In</h3>
                 </div>
-                <div class="panel-body">
-                    <form method="post" action="{% url 'login' %}">
+                <div class="panel-body" style="#">
+                    <form method="post">
                     {% csrf_token %}
                         <p class="bs-component">
                             <table>
                                 <tr>
-                                    <td>{{ form.username.label_tag }} </td>
-                                    <td>{{ form.username }} </td>
+                                    <!-- <td style="padding-bottom:20px">{{ form.username.label_tag }} </td> -->
+                                    <td class="my-td">{{ form.username }} </td>
                                 </tr>
                                 <tr>
-                                    <td>{{ form.password.label_tag }} </td>
+                                    <!-- <td>{{ form.password.label_tag }} </td> -->
                                     <td>{{ form.password }} </td>
                                 </tr>
-                            </table>
+                          </table>
                         </p>
-                        <p class="bs-component">
+                        <p class="bs-component" action="{% url 'login' %}">
                             <input class="btn btn-success btn-md" type="submit" value="Login" />
                         </p>
                         <input type="hidden" name="next" value="{{ next }}" />
@@ -51,6 +36,49 @@
     </div>
 </div>
 
+<!-- <div class="container" style="color:#000!important">
+  <div class="jumbotron">
+    <h1></span>	Computer Vision</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. </p>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-sm-6">
+        <div class="thumbnail">
+          <h1><i class="fa fa-video-camera" aria-hidden="true"></i></h1>
+          <h3>SCAN FACE</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-sm-6">
+          <div class="thumbnail">
+            <h1><i class="fa fa-cloud-upload" aria-hidden="true"></i></h1>
+            <h3>UPLOAD</h3>
+            <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+
+          </div>
+
+          <div class="col-lg-4 col-sm-6">
+            <div class="thumbnail">
+              <h1><i class="fa fa-smile-o" aria-hidden="true"></i></h1>
+              <h3>RETURN MESH</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="jumbotron">
+
+          </div>
+          </container> -->
+
+
 {% endblock %}
 
 {% block javascript %}
@@ -59,6 +87,20 @@
 {% if not user.is_authenticated %}
     $("#my-side-nav").css("display","none");
 {% endif %}
+</script>
+
+<script>
+{% if form.errors %}
+  alert("Your username and password didn't match. Please try again.");
+{% endif %}
+{% if next %}
+  {% if user.is_authenticated %}
+    alert("Your account doesn't have access to this page. To proceed, please login with an account that has access.");
+    // alert("Please login to see this page.");
+    // Console.log("Please login to see this page.");
+  {% endif %}
+{% endif %}
+
 </script>
 
 {% endblock %}

@@ -13,17 +13,17 @@ from .models import Video
 
 # If you don't do this you cannot use Bootstrap CSS
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(label="Username",
-                               widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username'}))
-    password = forms.CharField(label="Password",
-                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password'}))
+    username = forms.CharField(label="",
+                               widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username','placeholder': 'Username'}))
+    password = forms.CharField(label="",
+                               widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password','placeholder': 'Password'}))
 
 class SignUpForm(UserCreationForm):
-    username = EmailField(label=_("Email address"), required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'name': 'email'}))
-    password1 = forms.CharField(label="Password",
-                    widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password1'}))
-    password2 = forms.CharField(label="Repeat Password",
-                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password2'}))
+    username = EmailField(label=(""), required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'name': 'email','placeholder': 'Email Address'}))
+    password1 = forms.CharField(label="",
+                    widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password1','placeholder': 'Create a password'}))
+    password2 = forms.CharField(label="",
+                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password2','placeholder': 'Confirm password'}))
 
     class Meta:
         model = User

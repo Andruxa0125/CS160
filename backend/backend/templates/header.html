@@ -1,4 +1,4 @@
-{% load static %}
+{% load staticfiles %}
 
 <html>
 <head>
@@ -7,9 +7,14 @@
 <title>Face Finder</title>
 <!-- Core CSS - Include with every page -->
 <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<link rel="stylesheet" href="{% static 'css/login_form.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<body background="{% static 'img/background.png' %}">
+
 </head>
         <body>
-            <nav class="navbar navbar-default">
+            <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -18,11 +23,16 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="/">Face Finder</a>
+                        <a href="/" class="navbar-left"><img src="{% static "img/logo.png" %}" style="width:50px;height:50px;"></a>
+                        <!-- <a class="navbar-brand" href="/"><img src= alt="LOGO"/></a> -->
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
-                            <li id="signup-btn"><a href="{% url 'signup' %}"></span>Sign Up</a></li>
+
+                            {% if not user.is_authenticated %}
+                              <li id="signup-btn"><a href="{% url 'login' %}"></span>Home</a></li>
+                            {% endif %}
+                              <li id="signup-btn"><a href="{% url 'signup' %}"></span>Sign Up</a></li>
                             <li id='my-side-nav' class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account
                                     <span class="caret"></span>
