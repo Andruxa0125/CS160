@@ -1,0 +1,19 @@
+.panel-default{
+  width:200px!important;
+}
+
+.btn-success{
+  margin-left: 50px;
+}
+.panel{
+  border: none;
+}
+.panel-heading{
+  background-color: #000!important;
+  color: #fff!important;
+  border: 2px solid #000!important;
+}
+
+td, th{
+  padding-bottom:15px!important;
+}
