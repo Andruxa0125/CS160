@@ -9,3 +9,4 @@ __pycache__/*
 secret.sh
 *.avi
 *.mp4
+backend/media/documents/RESULTS_FOLDER_NAME/*

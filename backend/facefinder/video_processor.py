@@ -1,4 +1,4 @@
-import execute
+from . import execute
 import re
 import os
 import shutil
@@ -24,6 +24,9 @@ class videoReader():
     EXTRACT_COMMAND = ("ffmpeg -i %s -vf fps=%s %s%%d.jpg")
     CREATE_VIDEO_COMMAND = ('ffmpeg -r %s -start_number 1 -f image2 -i "%s%%d.jpg" -i %s -vcodec mjpeg -qscale 1 %s.avi')
     CREATE_AUDIO_COMMAND = ('ffmpeg -i %s -q:a 0 -map a %s%s')
+
+    # TODO: change this so we don't need to convert avi to mp4 to play online
+    CREATE_MP4_VIDEO = ("ffmpeg  -i %s.avi -vcodec libx264 -crf 25 %s.mp4")
 
     #REGEX NEEDED TO GET FRAME RATE AS DOUBLE
     REGEX_FRAME_RATE = "(\d+)/(\d+)"
@@ -78,6 +81,8 @@ class videoReader():
         print("Issuing following command to create video:\n" + cmd + "\n")
         command = execute.command()
         command.execute(cmd)
+        cmd2 = videoReader.CREATE_MP4_VIDEO % (video_dir, video_dir)
+        command.execute(cmd2)
 
     def generate_frames(self):
         """

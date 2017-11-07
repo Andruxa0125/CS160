@@ -37,7 +37,11 @@
                     </td>
                     <td class="col-md-5">
                         <video controls width="320" height="240">
-                            <source src="{{video.video.url}}" type="video/mp4">
+                            {% if video.newVideo %}
+                                <source src="{{video.newVideo.url}}" type="video/mp4">
+                            {% else %}
+                                <source src="{{video.video.url}}" type="video/mp4">
+                            {% endif %}
                         </video>
                     </td>
                 </tr>

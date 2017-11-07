@@ -7,7 +7,8 @@ import os
 from multiprocessing import Process
 import time
 
-predictor_path = "./CS160Local/shape_predictor_68_face_landmarks.dat"
+#TODO: change this path to something coooool
+predictor_path = "/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/static/shape_predictor_68_face_landmarks.dat"
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(predictor_path)

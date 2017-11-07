@@ -12,6 +12,13 @@ from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm
 from .forms import NewVideoForm
 from .models import Video
+from .final_program import run_video
+from django.core.files import File
+import time
+import os
+
+#TODO: change this path
+ROOT_PATH = "/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/"
 
 @login_required(login_url="login/")
 def home(request):
@@ -23,6 +30,15 @@ def home(request):
             video = form.save(commit=False)
             video.uploader = request.user
             video.save()
+            time.sleep(1)
+            print(ROOT_PATH + video.video.url)
+            #while not os.path.exists(file_path):
+            run_video(ROOT_PATH + video.video.url)
+
+            # TODO: change this path to include dynamic naming
+            f = open('/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/media/documents/RESULTS_FOLDER_NAME/result.mp4', "rb")
+            django_file = File(f)
+            video.newVideo.save("new_video.mp4", django_file, save=True)
     else:
         form = NewVideoForm()
 
