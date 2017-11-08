@@ -22,7 +22,8 @@ class videoReader():
                          "-show_entries stream=avg_frame_rate " \
                          "-of default=noprint_wrappers=1:nokey=1 ")
     EXTRACT_COMMAND = ("ffmpeg -i %s -vf fps=%s %s%%d.jpg")
-    CREATE_VIDEO_COMMAND = ('ffmpeg -r %s -start_number 1 -f image2 -i "%s%%d.jpg" -i %s -vcodec mjpeg -qscale 1 %s.avi')
+    #CREATE_VIDEO_COMMAND = ('ffmpeg -r %s -start_number 1 -f image2 -i "%s%%d.jpg" -i %s -vcodec mjpeg -qscale 1 %s.avi')
+    CREATE_VIDEO_COMMAND = ('ffmpeg -f image2 -loop 1 -r %s -i %s%%d.jpg -i %s -shortest -c:a copy -c:v libx264 -crf 23 -preset veryfast %s.mp4')
     CREATE_AUDIO_COMMAND = ('ffmpeg -i %s -q:a 0 -map a %s%s')
 
     #REGEX NEEDED TO GET FRAME RATE AS DOUBLE
@@ -34,11 +35,14 @@ class videoReader():
         be saved and all function will operate on that path.
         The path to the video has to be either absolute or relative.
         """
-        if(not os.path.isfile(path_to_video)):
-            raise Exception("The path to the video doesn't exist")
+        # if(not os.path.isfile(path_to_video)):
+        #     raise Exception("The path to the video doesn't exist")
         self.path_to_video = path_to_video
         self.frame_rate = -1
         absolute_path_to_video = os.path.abspath(path_to_video) #get absolute path to video
+        if not os.path.isfile(absolute_path_to_video):
+            print("Couldn't locate the the file. If you are passing as parameter, make sure the path is valid. Otherwise, check the code for hardcoded path.")
+            sys.exit("\nWe have to finish.")
         absolute_folder_of_video = os.path.dirname(absolute_path_to_video) #absolute path to folder containing video
         # resulting absolute path
         self.resulting_folder_path = os.path.join(absolute_folder_of_video, videoReader.RESULTS_FOLDER_NAME)
@@ -78,6 +82,7 @@ class videoReader():
         print("Issuing following command to create video:\n" + cmd + "\n")
         command = execute.command()
         command.execute(cmd)
+        self.clean_up()
 
     def generate_frames(self):
         """
@@ -93,7 +98,7 @@ class videoReader():
         print("Issuing following command generate frames:\n" + cmd + "\n")
         command = execute.command()
         command.execute(cmd)
-        return len(glob.glob1(self.resulting_folder_path,"*.png"))
+        return len(glob.glob1(self.resulting_folder_path,"*.%s" % videoReader.BASE_PICTURE_EXTENSION))
 
 
     def get_frame_rate(self, path_to_video):
@@ -127,6 +132,19 @@ class videoReader():
             result = num1 / num2
             result = float("{0:.2f}".format(result))
         return result
+
+    def clean_up(self):
+        """
+        deletes all the files that are not video.
+        """
+        folder = self.resulting_folder_path
+        for the_file in os.listdir(folder):
+            file_path = os.path.join(folder, the_file)
+            try:
+                if (os.path.isfile(file_path) and not file_path.endswith('.mp4')):
+                    os.unlink(file_path)
+            except Exception as e:
+                print(e)
 
 if __name__ == "__main__":
     path_to_video = ''

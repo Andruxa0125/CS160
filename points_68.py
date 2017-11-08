@@ -4,11 +4,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 import os
+import sys
 from multiprocessing import Process
 import time
 
-predictor_path = "./CS160Local/shape_predictor_68_face_landmarks.dat"
+dirname, filename = os.path.split(os.path.abspath(__file__))
 
+predictor_name = "shape_predictor_68_face_landmarks.dat"
+predictor_path = os.path.join(dirname, predictor_name)
+
+#print ("real path is " + dirname) 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(predictor_path)
 
@@ -32,11 +37,14 @@ class ImageProcessor():
         self.ext = extension
 
     def process_images(self, beginIndex, endIndex):
+        # this doesn't include endIndex
         for num in range(beginIndex, endIndex):
             pic_name = self.base_name + str(num) + '.' + self.ext
             #print(pic_name)
             pic_path = os.path.join(self.path_to_pics, pic_name)
-            #print(pic_path)
+            # this is for last thread to avoid doing math.
+            if(not os.path.exists(pic_path)):
+                continue
             self.draw_points(pic_path)
 
     def draw_points(self, pic_path):
@@ -54,33 +62,33 @@ class ImageProcessor():
         for k, d in enumerate(dets):
             shape = predictor(img, d)
 
-        if(not shape):
-            return
+            if(not shape):
+                return
 
-        pointList = []
-        for b in range(68):
-            point = Point(shape.part(b).x, shape.part(b).y)
-            # some points might be out of bound
-            # so, move them to the closest boundary
-            if(point.x < 0):
-                point.x = 0
-            elif(point.x >= width):
-                point.x = width - 1
-            if(point.y < 0):
-                point.y = 0
-            elif(point.y >= height):
-                point.y = height - 1
+            pointList = []
+            for b in range(68):
+                point = Point(shape.part(b).x, shape.part(b).y)
+                # some points might be out of bound
+                # so, move them to the closest boundary
+                if(point.x < 0):
+                    point.x = 0
+                elif(point.x >= width):
+                    point.x = width - 1
+                if(point.y < 0):
+                    point.y = 0
+                elif(point.y >= height):
+                    point.y = height - 1
 
-            pointList.append(point)
+                pointList.append(point)
 
-        counter = 0
-        for point in pointList:         
-            cv2.circle(img, (point.x, point.y), ImageProcessor.POINT_SIZE, ImageProcessor.POINT_COLOR, -1)
-            counter = counter + 1
+            counter = 0
+            for point in pointList:         
+                cv2.circle(img, (point.x, point.y), ImageProcessor.POINT_SIZE, ImageProcessor.POINT_COLOR, -1)
+                counter = counter + 1
 
-        self.draw_triangles(img, pointList)  
+            self.draw_triangles(img, pointList)  
 
-        cv2.imwrite(pic_path, img)
+            cv2.imwrite(pic_path, img)
 
     def draw_delaunay(self, img, subdiv):
         """
@@ -131,10 +139,14 @@ def global_process(path_to_pics, base_name, extension, step_size):
     begin = 1
     following = begin + step_size
     processList = []
+    print("Starting to process images using multithreading.\n")
     for i in range(0, THREADS_NUM):
+        #last thread should take all the photos.
+        if(i == 3):
+            following = following + 4
         #print("Process " + str(i) + " has started")
         reader = ImageProcessor(path_to_pics, base_name, extension)
-        print("thread " + str(i) + "passing begin index " + str(begin) + " and end " + str(following) + '\n')
+        print("Thread " + str(i) + " passing begin index " + str(begin) + " and end " + str(following) + '\n')
 
         proc = Process(target = reader.process_images, args = (begin, following,))
         processList.append(proc)
@@ -146,10 +158,11 @@ def global_process(path_to_pics, base_name, extension, step_size):
     for p in processList:
         p.join()
     elapsed_time = time.time() - start_time
-    print("I am all done waiting for threads, parallel execution took %s seconds" % str(elapsed_time))
+    print("I am all done waiting for threads, parallel execution took %s seconds.\n" % str(elapsed_time))
 
-# start_time = time.time()
-# reader = ImageProcessor('', 'pic', 'jpg')
-# reader.process_images(1,5)
-# elapsed_time = time.time() - start_time
-# print("Sequential execution took %s seconds" % str(elapsed_time))
+if __name__ == "__main__":
+    start_time = time.time()
+    reader = ImageProcessor('', 'pic', 'jpg')
+    reader.process_images(1,5)
+    elapsed_time = time.time() - start_time
+    print("Sequential execution took %s seconds" % str(elapsed_time))
