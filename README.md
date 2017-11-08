@@ -21,6 +21,6 @@ Then you can access the web page on local at http://127.0.0.1:8000/
 
 Back end:
 To run the final version of back end, you have to issue following command:
-python3 final_program.py
-At this moment, the path to the file is indicated in this file, but it will be changed to be passed as a parameter soon.
+python3 <path_to_final_program.py> <path_to_video>
+In the folder of final_program.py you should have shape_predictor_68_face_landmarks.dat.
 You will have to install different packages such as dlib, ffmpeg, and others.
