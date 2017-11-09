@@ -28,7 +28,9 @@ a{
 }
 
 .dropdown-menu{
-  background-color: #000;
+  background-color: #696969;
   text-decoration: none;
   font-size: 18px;
+  width: 350px!important;
+  text-align: center;
 }
