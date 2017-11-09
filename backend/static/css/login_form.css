@@ -1,34 +1,33 @@
+.login-container{
+  background-color: #fff!important;
+  width: 30%;
+  margin: auto;
+  border-radius: 10px;
 
-.btn-success{
-  margin-left: 50px;
-}
-.panel{
-  border: none;
-}
-.panel-heading{
-  background-color: #000!important;
-  color: #fff!important;
-  border: 2px solid #000!important;
 }
 
-.bs-component{
-  width: 50%;
-  margin: 0 auto;
+ul{
+  list-style-type: none;
+  padding-left: 0!important;
 }
 
-.panel-default{
-  width:100%!important;
+li{
+
 }
 
-p{
-  width: 50%!important;
-margin: 0 auto!important;
+.form{
+  padding: 20px 20px 20px 20px;
+  width: 90%;
+  margin: auto;
 }
 
-.login-panel{
-  width:100%!important;
+.form-inputs{
+  text-align: center;
+  padding: 10px 0 10px 0;
 }
 
-td, th{
-  padding-bottom:15px!important;
+
+#submit-button{
+  width: 100%;
+  margin: auto;
 }
