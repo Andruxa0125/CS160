@@ -13,8 +13,10 @@ from .forms import SignUpForm
 from .forms import NewVideoForm
 from .models import Video
 
-@login_required(login_url="login/")
 def home(request):
+    return render(request, 'home.html')
+
+def main(request):
     videos = Video.objects.filter(uploader=request.user.id).order_by('-uploaded_at')
 
     if request.method == 'POST':
@@ -26,7 +28,7 @@ def home(request):
     else:
         form = NewVideoForm()
 
-    return render(request, 'home.html', {'form': form, 'videos': videos})
+    return render(request, 'main.html', {'form': form, 'videos': videos})
 
 
 def signup(request):
@@ -38,7 +40,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('main')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})

@@ -22,8 +22,6 @@ from django.conf import settings
 
 # My imports
 from facefinder.forms import LoginForm
-
-
 from facefinder import views as my_views
 
 urlpatterns = [
@@ -31,5 +29,6 @@ urlpatterns = [
     url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name='login'),
     url(r'^logout/$', views.logout, {'next_page': '/login'}),
     url(r'^signup/$', my_views.signup, name='signup'),
+    url(r'^main/$', my_views.main, name='main'),
     url(r'^$', my_views.home, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
