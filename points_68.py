@@ -53,6 +53,7 @@ class ImageProcessor():
         args: a full path to the picture
         """
         img = cv2.imread(pic_path)
+        #(left_eye, right_eye) = pupil_finder(img)
         #print (pic_path)
         #print(os.path.exists(pic_path))
         dets = detector(img)
