@@ -4,16 +4,18 @@
 {% block content %}
 
 <section>
+<<<<<<< HEAD
   <div class="login-container">
     <div class="form-header">
       <h4> Welcome back! </h4>
     </div>
+=======
+  <div class="login-container jumbotron">
+>>>>>>> 8c4bdb1fe4f5cd6b5868f32ee54dbffc33753dd3
     <div class="form">
       <form method="post">
       {% csrf_token %}
         <ul>
-          <li class="form-inputs">{{ form.firstname }} </li>
-          <li class="form-inputs">{{ form.lastname }} </li>
           <li class="form-inputs">{{ form.username }} </li>
           <li class="form-inputs">{{ form.password }} </li>
         <li action="{% url 'login' %}" class="form-inputs">

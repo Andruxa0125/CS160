@@ -1,5 +1,5 @@
-import points_68
-import video_processor
+from . import points_68
+from . import video_processor
 import sys
 
 path = '/home/andrey/video.mp4'
