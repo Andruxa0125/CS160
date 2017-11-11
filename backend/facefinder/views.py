@@ -27,9 +27,7 @@ def home(request):
 
 @login_required
 def main(request, username, session_ID):
-    print(session_ID)
     session_ID = abs(hash(session_ID))
-    print(session_ID)
     videos = Video.objects.filter(uploader=request.user.id).order_by('-uploaded_at')
     if request.method == 'POST':
         form = NewVideoForm(request.POST, request.FILES)
@@ -37,7 +35,6 @@ def main(request, username, session_ID):
             video = form.save(commit=False)
             video.uploader = request.user
             video.save()
-           # print(ROOT_PATH + video.video)
             print(os.path.join(ROOT_PATH, str(video.video)))
             video_path = os.path.join(ROOT_PATH, str(video.video))
             run_video(video_path)
@@ -47,8 +44,7 @@ def main(request, username, session_ID):
             video.newVideo.save("new_video.mp4", django_file, save=True)
     else:
         form = NewVideoForm()
-
-
+    print(session_ID)
     return render(request, 'main.html', {'form': form, 'videos': videos})
 
 def signup(request):

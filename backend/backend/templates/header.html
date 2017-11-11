@@ -50,7 +50,8 @@
                                     </li>
                                     <li>
                                       {% with uniqueTok=user.email %}
-                                        <a href="{% url 'main' user.get_username uniqueTok %}", id="dropdown-menu-item">My Videos</a>
+                                        <!-- Need to figure out how to generate hash(uniqueTok) instead of hardcoding it... -->
+                                        <a href="{% url 'main' user.get_username 3981655693436253831 %}", id="dropdown-menu-item">My Videos</a>
                                       {% endwith %}
                                     </li>
                                     <li>
@@ -72,6 +73,7 @@
             <script src = "{% static 'jquery.min.js' %}"></script>
             <script src = "{% static 'bootstrap.min.js' %}"></script>
         {% block javascript %}
+
         {% endblock %}
         </body>
 </html>
