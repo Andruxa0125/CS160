@@ -1,5 +1,10 @@
 *{
   font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  text-decoration: none!important;
+}
+
+body{
+  background-color: #F9F9F9!important;
 }
 
 .navbar-inverse{
@@ -10,6 +15,7 @@
 ul.nav a:hover{
   background-color: #000!important;
   color: #696969!important;
+  text-decoration: none!important;
 }
 
 .p-alert{
@@ -22,15 +28,21 @@ a{
   font-size: 18px;
 }
 
+/*#dropdown-menu-item:hover{
+  color: #fff!important;
+}*/
+
 .panel-title{
   text-align: center;
   text-decoration:
 }
 
 .dropdown-menu{
-  background-color: #696969;
+  background-color: #000;
   text-decoration: none;
   font-size: 18px;
   width: 350px!important;
   text-align: center;
+
+
 }

@@ -1,8 +1,8 @@
 import dlib
-from skimage import io
+# from skimage import io
 import numpy as np
 import matplotlib.pyplot as plt
-import cv2
+# import cv2
 import os
 import sys
 from multiprocessing import Process
@@ -13,7 +13,7 @@ dirname, filename = os.path.split(os.path.abspath(__file__))
 predictor_name = "shape_predictor_68_face_landmarks.dat"
 predictor_path = os.path.join(dirname, predictor_name)
 
-#print ("real path is " + dirname) 
+#print ("real path is " + dirname)
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(predictor_path)
 
@@ -83,11 +83,11 @@ class ImageProcessor():
                 pointList.append(point)
 
             counter = 0
-            for point in pointList:         
+            for point in pointList:
                 cv2.circle(img, (point.x, point.y), ImageProcessor.POINT_SIZE, ImageProcessor.POINT_COLOR, -1)
                 counter = counter + 1
 
-            self.draw_triangles(img, pointList)  
+            self.draw_triangles(img, pointList)
 
             cv2.imwrite(pic_path, img)
 
@@ -135,7 +135,7 @@ class ImageProcessor():
 
         self.draw_delaunay(img, subdiv)
 
-def global_process(path_to_pics, base_name, extension, step_size): 
+def global_process(path_to_pics, base_name, extension, step_size):
     start_time = time.time()
     begin = 1
     following = begin + step_size

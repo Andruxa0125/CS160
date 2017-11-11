@@ -27,7 +27,9 @@ class SignUpForm(UserCreationForm):
                                 widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'first_name','placeholder': 'First Name (optional)'}))
     last_name = forms.CharField(label="", required=False,
                                 widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'last_name','placeholder': 'Last Name (optional)'}))
-    username = EmailField(label=(""), required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'name': 'email','placeholder': 'Email Address'}))
+    username = forms.CharField(label="", required=True,
+                                    widget=forms.TextInput(attrs={'class': 'form-control', 'name': 'username','placeholder': 'Username'}))
+    email = forms.EmailField(label=(""), required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'name': 'email','placeholder': 'Email Address'}))
     password1 = forms.CharField(label="",
                     widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password1','placeholder': 'Create a password'}))
     password2 = forms.CharField(label="",
@@ -35,7 +37,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
 
 class NewVideoForm(forms.ModelForm):
 
