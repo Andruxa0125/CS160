@@ -44,12 +44,12 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li style="color:#fff;"> Heya, {{ user.get_username }} </li>
+                                    <li style="color:#fff;"> Heya, {{ user.first_name }} </li>
                                     <li>
                                         <a href="{% url 'home'%}", id="dropdown-menu-item">Home</a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'main' user.get_username%}", id="dropdown-menu-item">My Videos</a>
+                                        <a href="{% url 'main' user.get_username %}", id="dropdown-menu-item">My Videos</a>
                                     </li>
                                     <li>
                                         <a href="/logout", id="dropdown-menu-item">Log Out</a>

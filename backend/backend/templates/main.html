@@ -7,7 +7,7 @@
   <div class="container" style="padding-bottom: 0px!important;">
     <div class="row">
         <div class="upload-box">
-            <h3>Upload your video for analysis</h3>
+            <h3>Hi, {{ user.first_name }}. Upload your video for analysis</h3>
               <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.video }}
