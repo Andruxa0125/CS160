@@ -22,13 +22,14 @@ from .core.final_program import run_video
 ROOT_PATH = "/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/media/"
 RESULT_VIDEO = "documents/RESULTS_FOLDER_NAME/result.mp4"
 
-
-
 def home(request):
     return render(request, 'home.html')
 
 @login_required
-def main(request, username):
+def main(request, username, session_ID):
+    print(session_ID)
+    session_ID = abs(hash(session_ID))
+    print(session_ID)
     videos = Video.objects.filter(uploader=request.user.id).order_by('-uploaded_at')
     if request.method == 'POST':
         form = NewVideoForm(request.POST, request.FILES)
@@ -47,8 +48,8 @@ def main(request, username):
     else:
         form = NewVideoForm()
 
-    return render(request, 'main.html', {'form': form, 'videos': videos})
 
+    return render(request, 'main.html', {'form': form, 'videos': videos})
 
 def signup(request):
     if request.method == 'POST':

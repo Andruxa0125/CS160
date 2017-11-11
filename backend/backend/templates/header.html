@@ -49,7 +49,9 @@
                                         <a href="{% url 'home'%}", id="dropdown-menu-item">Home</a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'main' user.get_username %}", id="dropdown-menu-item">My Videos</a>
+                                      {% with uniqueTok=user.email %}
+                                        <a href="{% url 'main' user.get_username uniqueTok %}", id="dropdown-menu-item">My Videos</a>
+                                      {% endwith %}
                                     </li>
                                     <li>
                                         <a href="/logout", id="dropdown-menu-item">Log Out</a>

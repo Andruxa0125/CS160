@@ -27,8 +27,8 @@ from facefinder import views as my_views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name='login'),
-    url(r'^logout/$', views.logout, {'next_page': '/login'}, name='logout'),
+    url(r'^logout/$', views.logout, {'next_page': '/'}, name='logout'),
     url(r'^signup/$', my_views.signup, name='signup'),
-    url(r'^(?P<username>[\w.@+-]+)/main/$', my_views.main, name='main'),
+    url(r'^(?P<username>[\w.@+-]+)/main/encryptedSessionToken&=(?P<session_ID>[\w.@+-]+)/$', my_views.main, name='main'),
     url(r'^$', my_views.home, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

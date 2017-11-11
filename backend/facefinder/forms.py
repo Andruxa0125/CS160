@@ -34,7 +34,9 @@ class SignUpForm(UserCreationForm):
                     widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password1','placeholder': 'Create a password'}))
     password2 = forms.CharField(label="",
                                 widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password2','placeholder': 'Confirm password'}))
-    
+
+
+
 
     class Meta:
         model = User
