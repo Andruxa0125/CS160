@@ -25,9 +25,9 @@ RESULT_VIDEO = "documents/RESULTS_FOLDER_NAME/result.mp4"
 def home(request):
     return render(request, 'home.html')
 
+
 @login_required
 def main(request, username, session_ID):
-    session_ID = abs(hash(session_ID))
     videos = Video.objects.filter(uploader=request.user.id).order_by('-uploaded_at')
     if request.method == 'POST':
         form = NewVideoForm(request.POST, request.FILES)
@@ -56,7 +56,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('main')
+            return redirect('/')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})

@@ -24,6 +24,8 @@ from django.conf import settings
 from facefinder.forms import LoginForm
 from facefinder import views as my_views
 
+
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name='login'),

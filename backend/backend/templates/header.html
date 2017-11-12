@@ -14,9 +14,6 @@
 <!-- <body background="{% static 'img/background.png' %}"> -->
  <body bgcolor= "#F9F9F9">
 
-
-
-
 </head>
         <body>
             <nav class="navbar navbar-inverse">
@@ -37,6 +34,7 @@
                               <li id="signup-btn"><a href="/login"></span>Log In</a></li>
                               <li id="signup-btn"><a href="{% url 'signup' %}"></span>Sign Up</a></li>
                             {% endif %}
+
                             {% if user.is_authenticated %}
                             <li id='my-side-nav' class="dropdown">
 
@@ -49,10 +47,10 @@
                                         <a href="{% url 'home'%}", id="dropdown-menu-item">Home</a>
                                     </li>
                                     <li>
-                                      {% with uniqueTok=user.email %}
-                                        <!-- Need to figure out how to generate hash(uniqueTok) instead of hardcoding it... -->
-                                        <a href="{% url 'main' user.get_username 3981655693436253831 %}", id="dropdown-menu-item">My Videos</a>
-                                      {% endwith %}
+                                        {% load user_hash %}
+                                        {% with uniqueTok=user.first_name|get_user_hash %}
+                                        <a href="{% url 'main' user.username uniqueTok %}", id="dropdown-menu-item">My Videos</a>
+                                        {% endwith %}
                                     </li>
                                     <li>
                                         <a href="/logout", id="dropdown-menu-item">Log Out</a>
