@@ -11,8 +11,9 @@
 <link rel="stylesheet" href="{% static 'css/login_form.css' %}">
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 <link rel="stylesheet" href="{% static 'css/main.css' %}">
-<!-- <body background="{% static 'img/background.png' %}"> -->
- <body bgcolor= "#F9F9F9">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<body background="{% static 'img/background.png' %}">
+ <!-- <body bgcolor= "#F9F9F9"> -->
 
 </head>
         <body>
@@ -30,9 +31,9 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
                             {% if not user.is_authenticated %}
-                              <li id="signup-btn"><a href="/"></span>Home</a></li>
-                              <li id="signup-btn"><a href="/login"></span>Log In</a></li>
-                              <li id="signup-btn"><a href="{% url 'signup' %}"></span>Sign Up</a></li>
+                              <li id="signup-btn"><a id="menu-link" href="/"></span>Home</a></li>
+                              <li id="signup-btn"><a id="menu-link" href="/login"></span>Log In</a></li>
+                              <li id="signup-btn"><a id="menu-link" href="{% url 'signup' %}"></span>Sign Up</a></li>
                             {% endif %}
 
                             {% if user.is_authenticated %}
@@ -42,18 +43,18 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li style="color:#fff;"> Heya, {{ user.first_name }} </li>
+                                    <li style="color:#7FFF00;"> Good day, {{ user.first_name }}! </li>
                                     <li>
-                                        <a href="{% url 'home'%}", id="dropdown-menu-item">Home</a>
+                                        <a style="float:left;" href="{% url 'home'%}", id="menu-link">$ Home</a>
                                     </li>
                                     <li>
                                         {% load user_hash %}
                                         {% with uniqueTok=user.first_name|get_user_hash %}
-                                        <a href="{% url 'main' user.username uniqueTok %}", id="dropdown-menu-item">My Videos</a>
+                                        <a style="float:left;" href="{% url 'main' user.username uniqueTok %}", id="menu-link">$ My Videos</a>
                                         {% endwith %}
                                     </li>
                                     <li>
-                                        <a href="/logout", id="dropdown-menu-item">Log Out</a>
+                                        <a style="float:left;" href="/logout", id="menu-link">$ Log Out</a>
                                     </li>
                                 </ul>
                             {% endif %}

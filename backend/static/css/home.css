@@ -1,4 +1,44 @@
 .home-wrapper{
-  width: 50%;
+  width: 75%;
   margin: auto;
+}
+
+.pic-container{
+  width: 100%;
+  margin: auto;
+}
+
+.jumbo-head{
+  text-align: center;
+}
+
+.jumbotron{
+  text-align: center!important;
+  margin: 0;
+  background-color: #E0FFFF;
+}
+
+.thumbnail{
+  text-align: center;
+}
+
+.header{
+  text-transform: uppercase;
+    text-align: center;
+    width: 30%;
+    margin: auto;
+    background-color: #fff;
+}
+
+img{
+  width: 200px;
+}
+
+body{
+  background-color: #F9F9F9!important;
+  padding-bottom: 75px!important;
+}
+
+h3{
+  margin-bottom: 20px;
 }

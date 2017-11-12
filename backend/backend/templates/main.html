@@ -2,20 +2,21 @@
 {% load tz %}
 
 {% block content %}
-
-<div class="interface-container">
-  <div class="container" style="padding-bottom: 0px!important;">
-    <div class="row">
-        <div class="upload-box">
-            <h3>Hi, {{ user.first_name }}. Upload your video for analysis</h3>
-              <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.video }}
-              </br><input class="btn btn-success btn-md" style="margin:auto;" type="submit" value="Upload Your Video" />
-              </form>
-        </div>
-    </div>
+<section>
+<div class="jumbotron">Upload your video to generate a face mesh!</div>
+<div class="container" style="padding-bottom: 0px!important;">
+  <div class="row">
+      <div class="upload-box">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div>{{ form.video }}</div>
+            </br>
+              <input class="btn btn-success btn-md" style="margin:auto;" type="submit" value="UPLOAD" id="upload-button" />
+            </form>
+      </div>
+  </div>
 </div>
+<div class="interface-container">
     {% if videos|length > 0 %}
     <div class="video-container">
         <table class="table">
@@ -46,8 +47,12 @@
         </table>
     </div>
   </div>
+{% endif %}
+</section>
 
-    {% endif %}
+{% include 'footer.html' %}
+
+
 
 {% endblock %}
 

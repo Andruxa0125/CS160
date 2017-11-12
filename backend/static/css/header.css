@@ -1,10 +1,6 @@
 *{
-  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-family: 'Lucida Console', Monaco, monospace;
   text-decoration: none!important;
-}
-
-body{
-  background-color: #F9F9F9!important;
 }
 
 .navbar-inverse{
@@ -24,13 +20,13 @@ ul.nav a:hover{
 
 a{
   color: #fff!important;
-  text-decoration: none;
   font-size: 18px;
 }
 
-/*#dropdown-menu-item:hover{
-  color: #fff!important;
-}*/
+#menu-link{
+  padding: 15px!important;
+  color: #7FFF00!important;
+}
 
 .panel-title{
   text-align: center;
@@ -38,11 +34,10 @@ a{
 }
 
 .dropdown-menu{
+  padding: 15px!important;
   background-color: #000;
   text-decoration: none;
   font-size: 18px;
   width: 350px!important;
   text-align: center;
-
-
 }

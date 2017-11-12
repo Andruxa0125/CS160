@@ -25,7 +25,6 @@ RESULT_VIDEO = "documents/RESULTS_FOLDER_NAME/result.mp4"
 def home(request):
     return render(request, 'home.html')
 
-
 @login_required
 def main(request, username, session_ID):
     videos = Video.objects.filter(uploader=request.user.id).order_by('-uploaded_at')
