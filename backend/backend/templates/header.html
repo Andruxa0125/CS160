@@ -49,7 +49,7 @@
                                     </li>
                                     <li>
                                         {% load user_hash %}
-                                        {% with uniqueTok=user.first_name|get_user_hash %}
+                                        {% with uniqueTok=user.username|get_user_hash %}
                                         <a style="float:left;" href="{% url 'main' user.username uniqueTok %}", id="user-menu-link">$ My Videos</a>
                                         {% endwith %}
                                     </li>
