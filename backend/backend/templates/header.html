@@ -45,16 +45,16 @@
                                 <ul class="dropdown-menu" role="menu">
                                     <li style="color:#7FFF00;"> Good day, {{ user.first_name }}! </li>
                                     <li>
-                                        <a style="float:left;" href="{% url 'home'%}", id="menu-link">$ Home</a>
+                                        <a style="float:left;" href="{% url 'home'%}", id="user-menu-link">$ Home</a>
                                     </li>
                                     <li>
                                         {% load user_hash %}
                                         {% with uniqueTok=user.first_name|get_user_hash %}
-                                        <a style="float:left;" href="{% url 'main' user.username uniqueTok %}", id="menu-link">$ My Videos</a>
+                                        <a style="float:left;" href="{% url 'main' user.username uniqueTok %}", id="user-menu-link">$ My Videos</a>
                                         {% endwith %}
                                     </li>
                                     <li>
-                                        <a style="float:left;" href="/logout", id="menu-link">$ Log Out</a>
+                                        <a style="float:left;" href="/logout", id="user-menu-link">$ Log Out</a>
                                     </li>
                                 </ul>
                             {% endif %}
