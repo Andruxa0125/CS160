@@ -24,13 +24,12 @@ from django.conf import settings
 from facefinder.forms import LoginForm
 from facefinder import views as my_views
 
-
-
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name='login'),
     url(r'^logout/$', views.logout, {'next_page': '/'}, name='logout'),
     url(r'^signup/$', my_views.signup, name='signup'),
     url(r'^(?P<username>[\w.@+-]+)/main/encryptedSessionToken&=int(?P<session_ID>\d+)/$', my_views.main, name='main'),
+    url(r'^myvideos/$', my_views.login_redirect, name='login_redirect'),
     url(r'^$', my_views.home, name='home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

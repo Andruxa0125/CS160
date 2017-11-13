@@ -26,6 +26,10 @@ def home(request):
     return render(request, 'home.html')
 
 @login_required
+def login_redirect(request):
+    return redirect('main', request.user.username, hash(hash(request.user.username)))
+
+@login_required
 def main(request, username, session_ID):
     videos = Video.objects.filter(uploader=request.user.id).order_by('-uploaded_at')
     if request.method == 'POST':

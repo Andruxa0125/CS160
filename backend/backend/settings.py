@@ -15,19 +15,17 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'h0+0@q0ppffeh4u6xg#bjgx=s47=j3ke!y5ae9tyq4aha8yn#8'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'login_redirect'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [u'0.0.0.0', 'facefinder68.herokuapp.com', '127.0.0.1']
-
 
 # Application definition
 
@@ -39,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'facefinder',
-    'facefinder.templatetags'
+    'facefinder.templatetags',
 ]
 
 # Simplified static file serving.
