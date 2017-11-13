@@ -1,8 +1,8 @@
 import dlib
-# from skimage import io
+from skimage import io
 import numpy as np
 import matplotlib.pyplot as plt
-# import cv2
+import cv2
 import os
 import sys
 from multiprocessing import Process
