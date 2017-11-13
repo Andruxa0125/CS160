@@ -1,9 +1,9 @@
 a:hover{
-
   text-decoration: none!important;
-
 }
 
 .dropdown-menu{
   width: 350px!important;
+  background-color: #fff!important;
+  border: 5px solid #fff;
 }

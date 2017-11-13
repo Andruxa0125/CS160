@@ -1,39 +1,55 @@
-.upload-box{
-  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-  color: #fff;
-  border-radius: 10px;
-  margin-top: 30px;
-  width: 550px;
-  /*trbl*/
-  padding: 20px 50px 20px 50px;
-  margin-left:30px;
-  text-transform: uppercase;
-}
-
-container{
-  color: #000!important;
-}
-
-.video-container{
-  color: #fff!important;
-  padding: 25px 75px 25px 75px;
-}
-
-.interface-container{
-  background-color: #000;
-  width: 65%;
+.home-wrapper{
+  width: 75%;
   margin: auto;
-  padding-top: 0px;
 }
 
-.container{
-  /*padding-top: 100px;*/
-  padding-bottom: 100px;
-  color: #fff!important;
-
+.pic-container{
+  width: 100%;
+  margin: auto;
 }
 
-.video-info{
-  color: #fff;
+.jumbo-head{
+  text-align: center;
+}
 
+.jumbotron{
+  text-align: center!important;
+  margin: 0;
+  background-color: #E0FFFF;
+  margin-top: 50px;
+  margin-bottom: 25px;
+  height: 50px;
+  padding: 0;
+  font-size: 45px!important;
+}
+
+.thumbnail{
+  text-align: center;
+}
+
+
+.header{
+  text-transform: uppercase;
+    text-align: center;
+    width: 30%;
+    margin: auto;
+    background-color: #fff;
+}
+
+img{
+  width: 200px;
+}
+
+body{
+  background-color: #F9F9F9!important;
+  padding-bottom: 250px!important;
+  padding-top: 75px!important;
+}
+
+h3{
+  margin-bottom: 20px;
+}
+
+h2{
+  font-size: 45px;
 }

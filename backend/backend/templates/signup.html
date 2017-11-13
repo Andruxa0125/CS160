@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="login-container">
+  <h1>Sign Up</h1>
   <div class="form">
     <form method="post">
       {% csrf_token %}
@@ -14,11 +15,13 @@
                 {% endfor %}
                 {% endfor %}
                 <br/>
-                <input class="btn btn-success btn-md" type="submit" value="Sign Up" id="submit-button">
+                <input class="btn btn-success btn-md" type="submit" value="Submit" id="submit-button">
           </ul>
       </form>
     </div>
 </div>
+
+{% include 'footer.html' %}
 {% endblock %}
 
 

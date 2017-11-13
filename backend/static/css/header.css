@@ -1,15 +1,26 @@
 *{
-  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-family: 'Lucida Console', Monaco, monospace;
+  text-decoration: none!important;
 }
 
 .navbar-inverse{
   border-radius: 0px;
   background-color: #000;
+  position:fixed;
 }
+
+.navbar-inverse{
+  position: fixed;
+  width: 100%;
+  z-index: 9999999;
+  top: 0;
+}
+
 
 ul.nav a:hover{
   background-color: #000!important;
   color: #696969!important;
+  text-decoration: none!important;
 }
 
 .p-alert{
@@ -18,8 +29,25 @@ ul.nav a:hover{
 
 a{
   color: #fff!important;
-  text-decoration: none;
   font-size: 18px;
+}
+
+#menu-link{
+  padding: 15px!important;
+  color: #fff!important;
+}
+
+#menu-link:hover{
+  color: #696969!important;
+}
+
+#user-menu-link{
+  padding: 15px!important;
+  color: #7FFF00!important;
+}
+
+#user-menu-link:hover{
+  color: #006400!important;
 }
 
 .panel-title{
@@ -28,7 +56,8 @@ a{
 }
 
 .dropdown-menu{
-  background-color: #696969;
+  padding: 15px!important;
+  background-color: #000;
   text-decoration: none;
   font-size: 18px;
   width: 350px!important;

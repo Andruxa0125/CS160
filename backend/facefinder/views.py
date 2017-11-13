@@ -7,8 +7,9 @@ from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-import os
 from django.core.files import File
+from django.contrib.auth.models import User
+import os
 
 # My Imports
 from .forms import SignUpForm
@@ -21,17 +22,18 @@ from .core.final_program import run_video
 ROOT_PATH = "/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/media/"
 RESULT_VIDEO = "documents/RESULTS_FOLDER_NAME/result.mp4"
 
-@login_required(login_url="login/")
 def home(request):
-    videos = Video.objects.filter(uploader=request.user.id).order_by('-uploaded_at')
+    return render(request, 'home.html')
 
+@login_required
+def main(request, username, session_ID):
+    videos = Video.objects.filter(uploader=request.user.id).order_by('-uploaded_at')
     if request.method == 'POST':
         form = NewVideoForm(request.POST, request.FILES)
         if form.is_valid():
             video = form.save(commit=False)
             video.uploader = request.user
             video.save()
-           # print(ROOT_PATH + video.video)
             print(os.path.join(ROOT_PATH, str(video.video)))
             video_path = os.path.join(ROOT_PATH, str(video.video))
             run_video(video_path)
@@ -41,9 +43,8 @@ def home(request):
             video.newVideo.save("new_video.mp4", django_file, save=True)
     else:
         form = NewVideoForm()
-
-    return render(request, 'home.html', {'form': form, 'videos': videos})
-
+    print(session_ID)
+    return render(request, 'main.html', {'form': form, 'videos': videos})
 
 def signup(request):
     if request.method == 'POST':
@@ -54,7 +55,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('/')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})

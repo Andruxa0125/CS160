@@ -1,0 +1,65 @@
+{% extends 'header.html' %}
+{% load tz %}
+
+{% block content %}
+<section>
+<div class="jumbotron" style="height: 40px; margin:0; font-size: 25px!important;">Upload your video to generate a face mesh!</div>
+<div class="container" style="padding-bottom: 0px!important;">
+  <div class="row">
+      <div class="upload-box">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div>{{ form.video }}</div>
+            </br>
+              <input class="btn btn-success btn-md" style="margin:auto;" type="submit" value="UPLOAD" id="upload-button" />
+            </form>
+      </div>
+  </div>
+</div>
+<div class="interface-container">
+    {% if videos|length > 0 %}
+    <div class="video-container">
+        <table class="table">
+            <thead>
+                <tr>
+                  <!-- <th scope="col" class="video-info">Date</th> -->
+                  <th scope="col" class="video-info">Original Video</th>
+                  <th scope="col" class="video-info">Final Video</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for video in videos %}
+                <tr>
+                    <!-- <td class="video-info">{{video.uploaded_at|timezone:"America/Los_Angeles"}}</td> -->
+                    <td class="col-md-5">
+                        <video controls width="320" height="240">
+                            <source src="{{video.video.url}}" type="video/mp4">
+                        </video>
+                    </td>
+                    <td class="col-md-5">
+                        <video controls width="320" height="240">
+                            <source src="{{video.video.url}}" type="video/mp4">
+                        </video>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+  </div>
+{% endif %}
+</section>
+
+{% include 'footer.html' %}
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+{% if user.is_authenticated %}
+    $("#signup-btn").css("display","none");
+{% endif %}
+</script>
+
+{% endblock %}

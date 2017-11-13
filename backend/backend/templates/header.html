@@ -10,7 +10,10 @@
 <link rel="stylesheet" href="{% static 'css/header.css' %}">
 <link rel="stylesheet" href="{% static 'css/login_form.css' %}">
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 <body background="{% static 'img/background.png' %}">
+ <!-- <body bgcolor= "#F9F9F9"> -->
 
 </head>
         <body>
@@ -24,39 +27,37 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a href="/" class="navbar-left"><img src="{% static "img/logo.png" %}" style="width:50px;height:50px;"></a>
-                        <!-- <a class="navbar-brand" href="/"><img src= alt="LOGO"/></a> -->
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
-
                             {% if not user.is_authenticated %}
-                              <li id="signup-btn"><a href="{% url 'login' %}"></span>Home</a></li>
+                              <li id="signup-btn"><a id="menu-link" href="/"></span>Home</a></li>
+                              <li id="signup-btn"><a id="menu-link" href="/login"></span>Log In</a></li>
+                              <li id="signup-btn"><a id="menu-link" href="{% url 'signup' %}"></span>Sign Up</a></li>
                             {% endif %}
-                              <li id="signup-btn"><a href="{% url 'signup' %}"></span>Sign Up</a></li>
+
+                            {% if user.is_authenticated %}
                             <li id='my-side-nav' class="dropdown">
+
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li style="color:#fff;"> Heya, {{ user.get_username }} </li>
+                                    <li style="color:#7FFF00;"> Good day, {{ user.first_name }}! </li>
                                     <li>
-                                        <a href="{% url 'home' %}">Home</a>
+                                        <a style="float:left;" href="{% url 'home'%}", id="user-menu-link">$ Home</a>
                                     </li>
-                                    <!--<li>-->
-                                        <!--<a href="#">Another action</a>-->
-                                    <!--</li>-->
-                                    <!--<li>-->
-                                        <!--<a href="#">Something else here</a>-->
-                                    <!--</li>-->
-                                    <!--<li class="divider"></li>-->
-                                    <!--<li>-->
-                                        <!--<a href="#">Separated link</a>-->
-                                    <!--</li>-->
-                                    <!--<li class="divider"></li>-->
                                     <li>
-                                        <a href="/logout">Logout</a>
+                                        {% load user_hash %}
+                                        {% with uniqueTok=user.username|get_user_hash %}
+                                        <a style="float:left;" href="{% url 'main' user.username uniqueTok %}", id="user-menu-link">$ My Videos</a>
+                                        {% endwith %}
+                                    </li>
+                                    <li>
+                                        <a style="float:left;" href="/logout", id="user-menu-link">$ Log Out</a>
                                     </li>
                                 </ul>
+                            {% endif %}
                             </li>
                         </ul>
                     </div>
@@ -71,6 +72,7 @@
             <script src = "{% static 'jquery.min.js' %}"></script>
             <script src = "{% static 'bootstrap.min.js' %}"></script>
         {% block javascript %}
+
         {% endblock %}
         </body>
 </html>
