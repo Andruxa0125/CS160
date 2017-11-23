@@ -149,6 +149,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+
 # if os.environ.get('ENV_VAR') == 'prod':
 #     AWS_QUERYSTRING_AUTH = False
 #     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
