@@ -10,15 +10,16 @@ from django.contrib.auth.decorators import login_required
 from django.core.files import File
 from django.contrib.auth.models import User
 import os
+import time
 
 # My Imports
 from .forms import SignUpForm
 from .forms import NewVideoForm
 from .models import Video
-from ..backend.settings import BASE_DIR
-
 # Core imports
 from .core.final_program import run_video
+
+from backend.settings import BASE_DIR
 
 ROOT_PATH = BASE_DIR + "/media/"
 print(ROOT_PATH)
@@ -43,6 +44,7 @@ def main(request, username, session_ID):
             print(os.path.join(ROOT_PATH, str(video.video)))
             video_path = os.path.join(ROOT_PATH, str(video.video))
             run_video(video_path)
+            time.sleep(10)
             result_video = os.path.join(ROOT_PATH, RESULT_VIDEO)
             f = open(result_video, "rb")
             django_file = File(f)
