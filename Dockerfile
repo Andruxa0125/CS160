@@ -36,4 +36,4 @@ COPY . /root/facefinder68
 RUN cd /root/facefinder68 && \
     pip3 install -r requirements.txt
 
-CMD gunicorn --pythonpath backend backend.wsgi
+CMD cd /root/facefinder68/backend && gunicorn --pythonpath backend backend.wsgi

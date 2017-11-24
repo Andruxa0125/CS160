@@ -15,11 +15,13 @@ import os
 from .forms import SignUpForm
 from .forms import NewVideoForm
 from .models import Video
+from ..backend.settings import BASE_DIR
 
 # Core imports
 from .core.final_program import run_video
 
-ROOT_PATH = "/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/media/"
+ROOT_PATH = BASE_DIR + "/media/"
+print(ROOT_PATH)
 RESULT_VIDEO = "documents/RESULTS_FOLDER_NAME/result.mp4"
 
 def home(request):
