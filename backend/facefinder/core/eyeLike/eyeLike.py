@@ -1,7 +1,10 @@
 import os
 from ctypes import *
 
-lib = cdll.LoadLibrary('./build/src/libmylib.dylib')
+wrapper_path = os.path.dirname(os.path.realpath(__file__))
+lib_path = os.path.join(wrapper_path, "build/src/libmylib.dylib")
+
+lib = cdll.LoadLibrary(lib_path)
 lib.eyes_in_video.restype = c_char_p
 lib.eyes_in_video.argtypes = [c_char_p]
 lib.eyes_in_picture.restype = c_char_p
