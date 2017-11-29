@@ -32,6 +32,11 @@ RUN cd ~ && \
     cd  dlib/ && \
     python3 setup.py install --yes USE_AVX_INSTRUCTIONS
 
+RUN set -x \
+    && add-apt-repository ppa:mc3man/trusty-media \
+    && apt-get install -y --no-install-recommends \
+        ffmpeg
+
 COPY . /root/facefinder68
 RUN cd /root/facefinder68 && \
     pip3 install -r requirements.txt

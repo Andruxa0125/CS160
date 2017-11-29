@@ -44,7 +44,6 @@ def main(request, username, session_ID):
             print(os.path.join(ROOT_PATH, str(video.video)))
             video_path = os.path.join(ROOT_PATH, str(video.video))
             run_video(video_path)
-            time.sleep(10)
             result_video = os.path.join(ROOT_PATH, RESULT_VIDEO)
             f = open(result_video, "rb")
             django_file = File(f)
