@@ -16,13 +16,27 @@ lib.eyes_in_picture.argtypes = [c_char_p]
 #print_eyes(s)
 
 
+
 def print_eyes(eye_string):
 	for i, eyes in enumerate(eye_string.split('F')):
+		print("Frame " + str(i+1)) 
 		for eye in eyes.split('/'):
 			if len(eye) > 0:
 				left, right = eye.split(';')
 				print("Left Eye: {0}, Right Eye: {1}".format(left, right))
-		print("Frame " + str(i+1)) 
+		
+
+def parse_eyes(eye_string):
+	eyes = []
+	for i, eyes in enumerate(eye_string.split('F')):
+		for eye in eyes.split('/'):
+			if len(eye) > 0:
+				left, right = eye.split(';')
+				lx, ly = left.split(',')
+				rx, ry = right.split(',')
+				eyes.append(((lx, ly), (rx, ry)))
+	return eyes
+
 
 
 def get_eye_locations_in_video(full_video_path):
@@ -31,7 +45,7 @@ def get_eye_locations_in_video(full_video_path):
 	else:
 		c_string_path = create_string_buffer(full_video_path)
 	eye_locations = lib.eyes_in_video(c_string_path)
-	return eye_locations
+	return parse_eyes(eye_locations.decode('utf-8'))
 
 
 def get_eye_locations_in_image(full_image_path):
@@ -40,4 +54,9 @@ def get_eye_locations_in_image(full_image_path):
 	else:
 		c_string_path = create_string_buffer(full_image_path)
 	eye_location = lib.eyes_in_picture(c_string_path)
-	return eye_location
+	return parse_eyes(eye_location.decode('utf-8'))
+
+
+
+
+
