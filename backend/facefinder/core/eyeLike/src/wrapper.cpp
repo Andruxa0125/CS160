@@ -86,10 +86,10 @@ std::string findEyes(cv::Mat frame_gray, cv::Rect face) {
   leftPupil.x += leftEyeRegion.x;
   leftPupil.y += leftEyeRegion.y;
   // draw eye centers
-  circle(faceROI, rightPupil, 3, 0);
-  ss <<  rightPupil.x << "," << rightPupil.y << ";";
   circle(faceROI, leftPupil, 3, 0);
-  ss << leftPupil.x << "," << leftPupil.y << "/";
+  ss << leftPupil.x << "," << leftPupil.y << ";";
+  circle(faceROI, rightPupil, 3, 0);
+  ss << rightPupil.x << "," << rightPupil.y  << "/";
 
   
 
@@ -225,7 +225,6 @@ const char *eyes_in_picture(char* name){
 	frame.copyTo(debugImage);
 	if( !frame.empty() ) {
     	eyes_in_frame += detectAndDisplay( frame );
-    	eyes_in_frame += "F";
   	}
   	else {
     	printf(" --(!) No captured frame -- Break!");

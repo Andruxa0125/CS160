@@ -2,6 +2,7 @@ import os
 from ctypes import *
 import sys
 
+
 wrapper_path = os.path.dirname(os.path.realpath(__file__))
 lib_path = os.path.join(wrapper_path, "build/src/libmylib.dylib")
 
@@ -15,6 +16,29 @@ lib.eyes_in_picture.argtypes = [c_char_p]
 #s = lib.eyes_in_video(name);
 #print_eyes(s)
 
+class Point:
+	def __init__(self, x_cord, y_cord):
+		if type(x_cord) == str:
+			self.x = int(x_cord)
+		else:
+			self.x = x_cord
+		if type(y_cord) == str:
+			self.y = int(y_cord)
+		else:
+			self.y = y_cord
+
+
+class Pupils:
+	def __init__(self, left_eye, right_eye):
+		if type(left_eye) == str:
+			self.left = Point(*left_eye.split(','))
+		else:
+			self.left = left_eye
+		if type(right_eye) == str:
+			self.right = Point(*right_eye.split(','))
+		else:
+			self.right = right_eye
+
 
 
 def print_eyes(eye_string):
@@ -27,15 +51,15 @@ def print_eyes(eye_string):
 		
 
 def parse_eyes(eye_string):
-	eyes = []
+	pupil_list = []
 	for i, eyes in enumerate(eye_string.split('F')):
+		eyes_in_frame = []
 		for eye in eyes.split('/'):
 			if len(eye) > 0:
-				left, right = eye.split(';')
-				lx, ly = left.split(',')
-				rx, ry = right.split(',')
-				eyes.append(((lx, ly), (rx, ry)))
-	return eyes
+				pupils = Pupils(*eye.split(';'))
+				eyes_in_frame.append(pupils)
+		pupil_list.append(eyes_in_frame)
+	return pupil_list
 
 
 
@@ -54,7 +78,7 @@ def get_eye_locations_in_image(full_image_path):
 	else:
 		c_string_path = create_string_buffer(full_image_path)
 	eye_location = lib.eyes_in_picture(c_string_path)
-	return parse_eyes(eye_location.decode('utf-8'))
+	return parse_eyes(eye_location.decode('utf-8'))[0]
 
 
 

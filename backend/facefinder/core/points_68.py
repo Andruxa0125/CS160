@@ -52,8 +52,9 @@ class ImageProcessor():
         Takes a picture, detects a face and draws all the points.
         args: a full path to the picture
         """
+        # Pupil Finding here 
+
         img = cv2.imread(pic_path)
-        #(left_eye, right_eye) = pupil_finder(img)
         #print (pic_path)
         #print(os.path.exists(pic_path))
         dets = detector(img)
