@@ -1,9 +1,11 @@
-from . import execute
+#from . import execute
+import execute
 import re
 import os
 import shutil
 import sys
 import glob
+import cv2
 #https://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
 #ffmpeg -r 20.0 -start_number 1 -f image2 -i "pic%d.png" -vcodec mjpeg -i sample.mp3 -qscale 1 attempt.avi
 # get audio from video ffmpeg -i input-video.avi -vn -acodec copy output-audio.aac
@@ -82,7 +84,7 @@ class videoReader():
         print("Issuing following command to create video:\n" + cmd + "\n")
         command = execute.command()
         command.execute(cmd)
-        self.clean_up()
+        #self.clean_up()
 
     def generate_frames(self):
         """
@@ -93,12 +95,20 @@ class videoReader():
         """
         self.frame_rate = self.get_frame_rate(self.path_to_video)
         frame_dir = os.path.join(self.resulting_folder_path, videoReader.BASE_PICTURE_NAME)
+        #print("HEYYYYY " + frame_dir)
         cmd = videoReader.EXTRACT_COMMAND % (self.path_to_video, self.frame_rate,
                                             frame_dir)
         print("Issuing following command generate frames:\n" + cmd + "\n")
         command = execute.command()
         command.execute(cmd)
-        return len(glob.glob1(self.resulting_folder_path,"*.%s" % videoReader.BASE_PICTURE_EXTENSION))
+        #getting path of a first frame to get width and height of a frame
+        path_to_first_frame = frame_dir + "1." + videoReader.BASE_PICTURE_EXTENSION
+        #print("FIRST FRAME " + path_to_first_frame)
+        img = cv2.imread(path_to_first_frame,0)
+        height, width = img.shape[:2]
+        #print("height is " + str(height))
+        #print("width is " + str(width))
+        return (len(glob.glob1(self.resulting_folder_path,"*.%s" % videoReader.BASE_PICTURE_EXTENSION)), height, width, self.frame_rate)
 
 
     def get_frame_rate(self, path_to_video):
@@ -147,14 +157,19 @@ class videoReader():
                 print(e)
 
 if __name__ == "__main__":
-    path_to_video = ''
-    if(len(sys.argv) == 1):
-        raise Exception("The program needs path to the video")
-    else:
-        path_to_video = sys.argv[1]
+    path_to_video = '/home/andrey/video.mp4'
+    # if(len(sys.argv) == 1):
+    #     raise Exception("The program needs path to the video")
+    # else:
+    #     path_to_video = sys.argv[1]
 
     videoReader  = videoReader(path_to_video)
-    frames_number = videoReader.generate_frames()
+    frames_number, height, width, frame_rate = videoReader.generate_frames()
+    print("Video Metadata:")
+    print("Frame number is " + str(frames_number))
+    print("Height is " + str(height))
+    print("Width is " + str(width))
+    print("Frame rate is " + str(frame_rate) + "\n")
     videoReader.create_audio()
 
     videoReader.create_video()
