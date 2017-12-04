@@ -55,7 +55,7 @@ class ImageProcessor():
         args: a full path to the picture
         """
         # Pupil Finding here 
-        #pupils = get_eye_locations_in_image(pic_path)
+        pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
         #print (pic_path)
         #print(os.path.exists(pic_path))
@@ -92,16 +92,16 @@ class ImageProcessor():
 
             self.draw_triangles(img, pointList)
             
-            # for pupil in pupils:
-            #     cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
-            #     cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
+            for pupil in pupils:
+                cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
+                cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
 
             cv2.imwrite(pic_path, img)
 
     def draw_delaunay(self, img, subdiv):
         """
         """
-        triangleList = subdiv.getTriangleList();
+        triangleList = subdiv.getTriangleList()
         count = 0
         height, width, channels = img.shape
         for triangle in triangleList:
