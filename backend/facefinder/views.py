@@ -19,7 +19,7 @@ from .models import Video
 # Core imports
 from .core.final_program import run_video
 
-from backend.settings import BASE_DIR
+from backend.settings import BASE_DIR, MEDIA_URL
 
 ROOT_PATH = BASE_DIR + "/media/"
 print(ROOT_PATH)
@@ -45,7 +45,7 @@ def main(request, username, session_ID):
 
             if os.environ.get('ENV_VAR') == 'prod':
                 from urllib.request import urlopen
-                video_file_S3 = urlopen(os.environ.get('MEDIA_URL') + str(video.video))
+                video_file_S3 = urlopen(MEDIA_URL + str(video.video))
                 with open(ROOT_PATH + str(video.video), 'wb') as output:
                     output.write(video_file_S3.read())
 
