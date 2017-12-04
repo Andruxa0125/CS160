@@ -54,7 +54,7 @@ class ImageProcessor():
         Takes a picture, detects a face and draws all the points.
         args: a full path to the picture
         """
-        # Pupil Finding here 
+        # Pupil Finding here
         pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
         #print (pic_path)
@@ -91,7 +91,7 @@ class ImageProcessor():
                 counter = counter + 1
 
             self.draw_triangles(img, pointList)
-            
+
             for pupil in pupils:
                 cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
                 cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
