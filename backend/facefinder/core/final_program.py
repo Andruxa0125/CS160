@@ -1,12 +1,15 @@
+from __future__ import absolute_import, unicode_literals
+from celery import task
 from . import points_68
 from . import video_processor
 import sys
+from celery import task
 
 path = '/home/andrey/video.mp4'
 THREAD_NUM = 4
 
-
-def run_video(path_to_video):
+@task()
+def run_video(path_to_video, video=None):
     videoReader  = video_processor.videoReader(path_to_video)
     number_of_frames = videoReader.generate_frames()
     #print("number of frames is " + str(number_of_frames))
@@ -19,4 +22,5 @@ def run_video(path_to_video):
 
 if __name__ == "__main__":
     run_video(path)
+
 

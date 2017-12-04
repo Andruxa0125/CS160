@@ -10,3 +10,6 @@ class Video(models.Model):
     newVideo = models.FileField(upload_to='documents/', null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     uploader = models.ForeignKey(User, on_delete=models.CASCADE)
+    #dimensions = models.CharField(null=True)
+    #fps = models.IntegerField(null=True)
+    #number_of_frames = models.IntegerField(null=True)

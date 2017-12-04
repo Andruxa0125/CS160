@@ -6,8 +6,9 @@ import cv2
 import os
 import sys
 from multiprocessing import Process
+import multiprocessing
 import time
-from eyeLike.eyeLike import *
+from .eyeLike.eyeLike import *
 
 
 dirname, filename = os.path.split(os.path.abspath(__file__))
@@ -54,11 +55,10 @@ class ImageProcessor():
         Takes a picture, detects a face and draws all the points.
         args: a full path to the picture
         """
-        # Pupil Finding here 
+        # Pupil Finding here
+        print(pic_path)
         pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
-        #print (pic_path)
-        #print(os.path.exists(pic_path))
         dets = detector(img)
         shape = None
         height, width, channels = img.shape
@@ -170,7 +170,7 @@ def global_process(path_to_pics, base_name, extension, step_size):
 
 if __name__ == "__main__":
     start_time = time.time()
-    reader = ImageProcessor('/Users/temp/projects/CS160/backend/facefinder/core/eyeLike/data', 'pic', 'jpg')
+    reader = ImageProcessor('/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/facefinder/core/eyeLike/data', 'pic', 'jpg')
     reader.process_images(1,5)
     elapsed_time = time.time() - start_time
     print("Sequential execution took %s seconds" % str(elapsed_time))

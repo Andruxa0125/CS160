@@ -43,7 +43,7 @@ def main(request, username, session_ID):
             video.save()
             print(os.path.join(ROOT_PATH, str(video.video)))
             video_path = os.path.join(ROOT_PATH, str(video.video))
-            run_video(video_path)
+            run_video(video_path, video)
             result_video = os.path.join(ROOT_PATH, RESULT_VIDEO)
             f = open(result_video, "rb")
             django_file = File(f)

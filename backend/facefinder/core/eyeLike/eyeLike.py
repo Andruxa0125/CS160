@@ -73,12 +73,12 @@ def get_eye_locations_in_video(full_video_path):
 
 
 def get_eye_locations_in_image(full_image_path):
-	if sys.version_info.major == 3:
-		c_string_path = full_image_path.encode('utf-8')
-	else:
-		c_string_path = create_string_buffer(full_image_path)
-	eye_location = lib.eyes_in_picture(c_string_path)
-	return parse_eyes(eye_location.decode('utf-8'))[0]
+    if sys.version_info.major == 3:
+        c_string_path = full_image_path.encode('utf-8')
+    else:
+        c_string_path = create_string_buffer(full_image_path)
+    eye_location = lib.eyes_in_picture(c_string_path)
+    return parse_eyes(eye_location.decode('utf-8'))[0]
 
 
 
