@@ -42,12 +42,20 @@ def main(request, username, session_ID):
             video.uploader = request.user
             video.save()
             print(os.path.join(ROOT_PATH, str(video.video)))
+
+            if os.environ.get('ENV_VAR') == 'prod':
+                from urllib.request import urlopen
+                video_file_S3 = urlopen(os.environ.get('MEDIA_URL') + str(video.video))
+                with open(ROOT_PATH + str(video.video), 'wb') as output:
+                    output.write(video_file_S3.read())
+
             video_path = os.path.join(ROOT_PATH, str(video.video))
             run_video(video_path, video)
             result_video = os.path.join(ROOT_PATH, RESULT_VIDEO)
             f = open(result_video, "rb")
             django_file = File(f)
-            video.newVideo.save("new_video.mp4", django_file, save=True)
+            timestr = time.strftime("%Y%m%d%H%M%S")
+            video.newVideo.save("new_video_" + timestr + ".mp4", django_file, save=True)
     else:
         form = NewVideoForm()
     print(session_ID)
