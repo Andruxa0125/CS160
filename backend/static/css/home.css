@@ -23,6 +23,13 @@
   font-size: 45px!important;
 }
 
+#stack-jumbotron{
+  img{
+    width:100px!important;
+    height:100px!important;
+  }
+}
+
 .thumbnail{
   text-align: center;
 }

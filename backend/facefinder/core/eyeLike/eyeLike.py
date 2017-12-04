@@ -47,12 +47,12 @@ class Pupils:
 
 def print_eyes(eye_string):
 	for i, eyes in enumerate(eye_string.split('F')):
-		print("Frame " + str(i+1)) 
+		print("Frame " + str(i+1))
 		for eye in eyes.split('/'):
 			if len(eye) > 0:
 				left, right = eye.split(';')
 				print("Left Eye: {0}, Right Eye: {1}".format(left, right))
-		
+
 
 def parse_eyes(eye_string):
 	pupil_list = []
@@ -83,8 +83,3 @@ def get_eye_locations_in_image(full_image_path):
 		c_string_path = create_string_buffer(full_image_path)
 	eye_location = lib.eyes_in_picture(c_string_path)
 	return parse_eyes(eye_location.decode('utf-8'))[0]
-
-
-
-
-
