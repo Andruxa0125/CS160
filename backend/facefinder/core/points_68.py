@@ -42,7 +42,7 @@ class ImageProcessor():
         # this doesn't include endIndex
         for num in range(beginIndex, endIndex):
             pic_name = self.base_name + str(num) + '.' + self.ext
-            #print(pic_name)
+            print(pic_name)
             pic_path = os.path.join(self.path_to_pics, pic_name)
             # this is for last thread to avoid doing math.
             if(not os.path.exists(pic_path)):
@@ -55,10 +55,10 @@ class ImageProcessor():
         args: a full path to the picture
         """
         # Pupil Finding here
-        pupils = get_eye_locations_in_image(pic_path)
+        # pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
-        #print (pic_path)
-        #print(os.path.exists(pic_path))
+        print (pic_path)
+        print(os.path.exists(pic_path))
         dets = detector(img)
         shape = None
         height, width, channels = img.shape
@@ -92,9 +92,9 @@ class ImageProcessor():
 
             self.draw_triangles(img, pointList)
 
-            for pupil in pupils:
-                cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
-                cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
+            # for pupil in pupils:
+            #     cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
+            #     cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
 
             cv2.imwrite(pic_path, img)
 
@@ -152,7 +152,7 @@ def global_process(path_to_pics, base_name, extension, step_size):
         #last thread should take all the photos.
         if(i == 3):
             following = following + 4
-        #print("Process " + str(i) + " has started")
+        print("Process " + str(i) + " has started")
         reader = ImageProcessor(path_to_pics, base_name, extension)
         print("Thread " + str(i) + " passing begin index " + str(begin) + " and end " + str(following) + '\n')
 
