@@ -1,5 +1,5 @@
-from . import execute
 #import execute
+from . import execute
 import re
 import os
 import shutil
@@ -84,7 +84,7 @@ class videoReader():
         print("Issuing following command to create video:\n" + cmd + "\n")
         command = execute.command()
         command.execute(cmd)
-        #self.clean_up()
+        self.clean_up()
 
     def generate_frames(self):
         """
@@ -151,7 +151,7 @@ class videoReader():
         for the_file in os.listdir(folder):
             file_path = os.path.join(folder, the_file)
             try:
-                if (os.path.isfile(file_path) and not file_path.endswith('.mp4')):
+                if (os.path.isfile(file_path) and not (file_path.endswith('.mp4') or file_path.endswith('.json'))):
                     os.unlink(file_path)
             except Exception as e:
                 print(e)
