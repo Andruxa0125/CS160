@@ -4,7 +4,11 @@ import sys
 
 
 wrapper_path = os.path.dirname(os.path.realpath(__file__))
-lib_path = os.path.join(wrapper_path, "build/src/libmylib.dylib")
+
+if os.environ.get('ENV_VAR') == 'prod':
+	lib_path = os.path.join(wrapper_path, "build/src/libmylib.so")
+else:
+	lib_path = os.path.join(wrapper_path, "build/src/libmylib.dylib")
 
 lib = cdll.LoadLibrary(lib_path)
 lib.eyes_in_video.restype = c_char_p

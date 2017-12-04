@@ -37,8 +37,29 @@ RUN set -x \
     && apt-get install -y --no-install-recommends \
         ffmpeg
 
+RUN cd /root && \
+    git clone https://github.com/opencv/opencv.git && \
+    cd ~/opencv && \
+    mkdir release && \
+    cd release && \
+    cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local .. && \
+    make && \
+    make install
+
 COPY . /root/facefinder68
+
+RUN cd /root/facefinder68/backend/facefinder/core/eyeLike && \
+    rm -r build/ && \
+    mkdir build && \
+    cd build && \
+    cmake ../ && \
+    make
+
 RUN cd /root/facefinder68 && \
     pip3 install -r requirements.txt
+
+#RUN cd /root/facefinder68/backend && \
+#    python manage.py makemigrations && \
+#    python manage.py migrate
 
 CMD cd /root/facefinder68/backend && gunicorn --pythonpath backend backend.wsgi
