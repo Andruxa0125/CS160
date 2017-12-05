@@ -8,7 +8,7 @@ import os
 import sys
 from multiprocessing import Process
 import time
-from .eyeLike.eyeLike import *
+from eyeLike.eyeLike import *
 import re
 import json
 
@@ -123,6 +123,7 @@ class ImageProcessor():
                 cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
                 print(pupil.left.x, ", ", pupil.left.y)
                 print(pupil.right.x, ", ", pupil.right.y)
+
             cv2.imwrite(pic_path, img)
 
     def draw_delaunay(self, img, subdiv):
