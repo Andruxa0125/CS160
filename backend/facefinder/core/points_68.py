@@ -55,23 +55,29 @@ class ImageProcessor():
 
     def process_images(self, beginIndex, endIndex):
         # this doesn't include endIndex
+        frames_data = {}
+        counter = beginIndex
         for num in range(beginIndex, endIndex):
+            points_data = {}
             pic_name = self.base_name + str(num) + '.' + self.ext
             print(pic_name)
             pic_path = os.path.join(self.path_to_pics, pic_name)
             # this is for last thread to avoid doing math.
             if(not os.path.exists(pic_path)):
                 continue
-            self.draw_points(pic_path)
-        self.drop_data()
+            self.draw_points(pic_path, points_data)
+            frames_data[counter] = points_data
+            counter = counter + 1
+        self.drop_data('data', self.data)
+        self.drop_data('points', frames_data)
 
-    def draw_points(self, pic_path):
+    def draw_points(self, pic_path, points_data):
         """
         Takes a picture, detects a face and draws all the points.
         args: a full path to the picture
         """
         # Pupil Finding here
-        pupils = get_eye_locations_in_image(pic_path)
+        #pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
         print (pic_path)
         print(os.path.exists(pic_path))
@@ -87,9 +93,12 @@ class ImageProcessor():
                 return
 
             pointList = []
+            c = 0
             for b in range(68):
                 # sanitizing input points
                 point = Point(shape.part(b).x, shape.part(b).y)
+                points_data[c] = [point.x, point.y]
+                c = c + 1
                 # some points might be out of bound
                 # so, move them to the closest boundary
                 if(point.x < 0):
@@ -121,6 +130,8 @@ class ImageProcessor():
             for pupil in pupils:
                 cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
                 cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
+                #points_data[-1] = [pupil.left.x, pupil.left.y]
+                #points_data[-2] = [pupil.right.x, pupil.right.y]
                 print(pupil.left.x, ", ", pupil.left.y)
                 print(pupil.right.x, ", ", pupil.right.y)
 
@@ -167,20 +178,20 @@ class ImageProcessor():
 
         self.draw_delaunay(img, subdiv)
 
-    def drop_data(self):
+    def drop_data(self, base_name, data):
         #global CURRENT_THREAD_NUM
         #name = 'data' + str(CURRENT_THREAD_NUM) + '.json'
-        name = 'data' + str(self.index) + '.json'
+        name = base_name + str(self.index) + '.json'
         print("name of the files is " + str(name))
         with open(os.path.join(self.path_to_pics, name), 'w+') as outfile:
-            json.dump(self.data, outfile)
+            json.dump(data, outfile)
 
-def merge_jsons(path_to_jsons):
-    path1 = os.path.join(path_to_jsons, 'data1.json')
-    path2 = os.path.join(path_to_jsons, 'data2.json')
-    path3 = os.path.join(path_to_jsons, 'data3.json')
-    path4 = os.path.join(path_to_jsons, 'data4.json')
-    final_path = os.path.join(path_to_jsons, 'data.json')
+def merge_jsons(path_to_jsons, base_name):
+    path1 = os.path.join(path_to_jsons, base_name + '1.json')
+    path2 = os.path.join(path_to_jsons, base_name + '2.json')
+    path3 = os.path.join(path_to_jsons, base_name + '3.json')
+    path4 = os.path.join(path_to_jsons, base_name + '4.json')
+    final_path = os.path.join(path_to_jsons, base_name + '.json')
     with open(path1) as f1, open(path2) as f2,\
          open(path3) as f3, open(path4) as f4:
         first_list = json.load(f1)
@@ -228,7 +239,8 @@ def global_process(path_to_pics, base_name, extension, step_size):
     for p in processList:
         p.join()
     elapsed_time = time.time() - start_time
-    merge_jsons(path_to_pics)
+    merge_jsons(path_to_pics, 'data')
+    merge_jsons(path_to_pics, 'points')
     print("I am all done waiting for threads, parallel execution took %s seconds.\n" % str(elapsed_time))
 
 
