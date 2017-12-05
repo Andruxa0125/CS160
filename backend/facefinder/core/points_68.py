@@ -42,11 +42,16 @@ class ImageProcessor():
     POINT_SIZE = 3
     POINT_COLOR = (255, 0, 0)
     BASE_NAME = "pic"
-    def __init__(self, path_to_pics, base_name, extension):
+    def __init__(self, path_to_pics, base_name, extension, index=None):
         self.path_to_pics = path_to_pics
         self.base_name = base_name
         self.ext = extension
         self.data = {}
+        self.index = index
+        if(self.index):
+            self.index = str(index)
+        else:
+            self.index = ''
 
     def process_images(self, beginIndex, endIndex):
         # this doesn't include endIndex
@@ -119,7 +124,6 @@ class ImageProcessor():
                 print(pupil.left.x, ", ", pupil.left.y)
                 print(pupil.right.x, ", ", pupil.right.y)
 
-
             cv2.imwrite(pic_path, img)
 
     def draw_delaunay(self, img, subdiv):
@@ -164,7 +168,10 @@ class ImageProcessor():
         self.draw_delaunay(img, subdiv)
 
     def drop_data(self):
-        name = 'data' + str(CURRENT_THREAD_NUM) + '.json'
+        #global CURRENT_THREAD_NUM
+        #name = 'data' + str(CURRENT_THREAD_NUM) + '.json'
+        name = 'data' + str(self.index) + '.json'
+        print("name of the files is " + str(name))
         with open(os.path.join(self.path_to_pics, name), 'w+') as outfile:
             json.dump(self.data, outfile)
 
@@ -205,8 +212,10 @@ def global_process(path_to_pics, base_name, extension, step_size):
             following = following + 4
         print("Process " + str(i) + " has started")
         #print("Process " + str(i) + " has started")
-        CURRENT_THREAD_NUM = i + 1
-        reader = ImageProcessor(path_to_pics, base_name, extension)
+        #CURRENT_THREAD_NUM = i + 1
+
+        print("current thread num is " + str(i + 1))
+        reader = ImageProcessor(path_to_pics, base_name, extension, i + 1)
         print("Thread " + str(i) + " passing begin index " + str(begin) + " and end " + str(following) + '\n')
 
         proc = Process(target = reader.process_images, args = (begin, following,))
