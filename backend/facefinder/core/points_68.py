@@ -8,7 +8,7 @@ import os
 import sys
 from multiprocessing import Process
 import time
-from .eyeLike.eyeLike import *
+from eyeLike.eyeLike import *
 import re
 import json
 
@@ -66,7 +66,7 @@ class ImageProcessor():
         args: a full path to the picture
         """
         # Pupil Finding here
-        # pupils = get_eye_locations_in_image(pic_path)
+        pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
         print (pic_path)
         print(os.path.exists(pic_path))
@@ -112,19 +112,13 @@ class ImageProcessor():
                 counter = counter + 1
 
             self.draw_triangles(img, pointList)
-<<<<<<< Updated upstream
-
-            # for pupil in pupils:
-            #     cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
-            #     cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
-=======
             
             for pupil in pupils:
                 cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
                 cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
                 print(pupil.left.x, ", ", pupil.left.y)
                 print(pupil.right.x, ", ", pupil.right.y)
->>>>>>> Stashed changes
+
 
             cv2.imwrite(pic_path, img)
 
@@ -287,15 +281,12 @@ def calculateProportion(pts):
 
 if __name__ == "__main__":
     start_time = time.time()
-<<<<<<< Updated upstream
     # reader = ImageProcessor('/home/andrey/test', 'pic', 'jpg')
     # reader.process_images(1,12)
     # elapsed_time = time.time() - start_time
     # drop_data('/home/andrey/test')
     # print("Sequential execution took %s seconds" % str(elapsed_time))
-=======
     reader = ImageProcessor('/Users/temp/projects/CS160/backend/facefinder/core/eyeLike/data', 'pic', 'jpg')
     reader.process_images(1,2)
     elapsed_time = time.time() - start_time
     print("Sequential execution took %s seconds" % str(elapsed_time))
->>>>>>> Stashed changes
