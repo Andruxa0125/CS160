@@ -187,8 +187,8 @@ std::string detectAndDisplay( cv::Mat frame ) {
   cv::Mat frame_gray = rgbChannels[2];
 
   //-- Detect faces
-  face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE|CV_HAAR_FIND_BIGGEST_OBJECT, cv::Size(150, 150) );
-
+  face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(150, 150) );
+  std::cout << "Number of Faces found: " << faces.size() << std::endl;
   for( int i = 0; i < faces.size(); i++ ){
     rectangle(debugImage, faces[i], 1234);
   }
