@@ -132,10 +132,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-
-
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -157,4 +153,5 @@ if os.environ.get('ENV_VAR') == 'prod':
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 if os.environ.get('ENV_VAR') == 'dev':
+    #print("Reaching one line")
     multiprocessing.set_start_method('spawn')

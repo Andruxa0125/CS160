@@ -60,7 +60,7 @@ class ImageProcessor():
         for num in range(beginIndex, endIndex):
             points_data = {}
             pic_name = self.base_name + str(num) + '.' + self.ext
-            print(pic_name)
+            #print(pic_name)
             pic_path = os.path.join(self.path_to_pics, pic_name)
             # this is for last thread to avoid doing math.
             if(not os.path.exists(pic_path)):
@@ -79,8 +79,8 @@ class ImageProcessor():
         # Pupil Finding here
         pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
-        print (pic_path)
-        print(os.path.exists(pic_path))
+        #print (pic_path)
+        #print(os.path.exists(pic_path))
         frame_number = int(re.findall(r'\d+', pic_path.split('/')[-1])[0])
         dets = detector(img)
         shape = None
@@ -130,10 +130,10 @@ class ImageProcessor():
             for pupil in pupils:
                 cv2.circle(img, (pupil.left.x, pupil.left.y), 5, (0,0,255), -1)
                 cv2.circle(img, (pupil.right.x, pupil.right.y), 5, (0,0,255), -1)
-                #points_data[-1] = [pupil.left.x, pupil.left.y]
-                #points_data[-2] = [pupil.right.x, pupil.right.y]
-                print(pupil.left.x, ", ", pupil.left.y)
-                print(pupil.right.x, ", ", pupil.right.y)
+                points_data[-1] = [pupil.left.x, pupil.left.y]
+                points_data[-2] = [pupil.right.x, pupil.right.y]
+                #print(pupil.left.x, ", ", pupil.left.y)
+                #print(pupil.right.x, ", ", pupil.right.y)
 
             cv2.imwrite(pic_path, img)
 
@@ -182,7 +182,7 @@ class ImageProcessor():
         #global CURRENT_THREAD_NUM
         #name = 'data' + str(CURRENT_THREAD_NUM) + '.json'
         name = base_name + str(self.index) + '.json'
-        print("name of the files is " + str(name))
+        #print("name of the files is " + str(name))
         with open(os.path.join(self.path_to_pics, name), 'w+') as outfile:
             json.dump(data, outfile)
 
@@ -225,7 +225,7 @@ def global_process(path_to_pics, base_name, extension, step_size):
         #print("Process " + str(i) + " has started")
         #CURRENT_THREAD_NUM = i + 1
 
-        print("current thread num is " + str(i + 1))
+        #print("current thread num is " + str(i + 1))
         reader = ImageProcessor(path_to_pics, base_name, extension, i + 1)
         print("Thread " + str(i) + " passing begin index " + str(begin) + " and end " + str(following) + '\n')
 

@@ -189,7 +189,7 @@ std::string detectAndDisplay( cv::Mat frame ) {
 
   //-- Detect faces
   face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(150, 150) );
-  std::cout << "Number of Faces found: " << faces.size() << std::endl;
+  //std::cout << "Number of Faces found: " << faces.size() << std::endl;
   for( int i = 0; i < faces.size(); i++ ){
     rectangle(debugImage, faces[i], 1234);
   }
@@ -204,8 +204,8 @@ std::string detectAndDisplay( cv::Mat frame ) {
 extern "C"
 const char *eyes_in_video(char* name){
 	std::string all_eyes = "";
-	cout<<strlen(name)<<endl;
-	cout<<name<<endl;
+	//cout<<strlen(name)<<endl;
+	//cout<<name<<endl;
 
   	createCornerKernels();
   	ellipse(skinCrCbHist, cv::Point(113, 155.6), cv::Size(23.4, 15.2),
