@@ -1,6 +1,7 @@
 .home-wrapper{
-  width: 75%;
+  width: 100%;
   margin: auto;
+  padding: 50px;
 }
 
 .pic-container{
@@ -23,7 +24,7 @@
   font-size: 45px!important;
 }
 
-#stack-jumbotron{
+.stack-jumbotron{
   img{
     width:100px!important;
     height:100px!important;
@@ -32,6 +33,7 @@
 
 .thumbnail{
   text-align: center;
+  padding: 20px;
 }
 
 
@@ -45,6 +47,11 @@
 
 img{
   width: 200px;
+}
+
+.youtube-video-container{
+  width: 50%;
+  margin: auto;
 }
 
 body{
