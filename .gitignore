@@ -11,3 +11,4 @@ secret.sh
 *.mp4
 /backend/media/documents/RESULTS_FOLDER_NAME/*.jpg
 /backend/media/documents/RESULTS_FOLDER_NAME/*.mp3
+backend/media/documents/RESULTS_FOLDER_NAME/data.json

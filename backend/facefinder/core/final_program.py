@@ -6,7 +6,7 @@ import sys
 import multiprocessing
 import os
 import json
-
+from backend.settings import BASE_DIR
 
 path = '/home/andrey/video.mp4'
 THREAD_NUM = 4
@@ -31,8 +31,12 @@ def run_video(path_to_video, video=None):
         multiprocessing.set_start_method('spawn')
     points_68.global_process(videoReader.resulting_folder_path ,videoReader.BASE_PICTURE_NAME,
     							videoReader.BASE_PICTURE_EXTENSION, step_size)
+    yaw_pitch_roll = json.load(open(BASE_DIR + '/media/documents/RESULTS_FOLDER_NAME/data.json'))
+    video.video_roll_pitch_yaw = yaw_pitch_roll
+    video.save()
     videoReader.create_video()
-    # data = json.load(open('/home/andrey/RESULTS_FOLDER_NAME/data.json'))
+
+
     # print(len(data))
 
 if __name__ == "__main__":

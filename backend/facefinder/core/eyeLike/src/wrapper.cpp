@@ -25,7 +25,8 @@ std::string detectAndDisplay( cv::Mat frame );
 
 /** Global variables */
 //-- Note, either copy these two files from opencv/data/haarscascades to your current folder, or change these locations
-cv::String face_cascade_name = "/root/facefinder68/backend/facefinder/core/eyeLike/res/haarcascade_frontalface_alt.xml";
+//cv::String face_cascade_name = "/root/facefinder68/backend/facefinder/core/eyeLike/res/haarcascade_frontalface_alt.xml";
+cv::String face_cascade_name = "/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/facefinder/core/eyeLike/res/haarcascade_frontalface_alt.xml";
 cv::CascadeClassifier face_cascade;
 std::string main_window_name = "Capture - Face detection";
 std::string face_window_name = "Face Window";
