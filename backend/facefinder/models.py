@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
+from jsonfield import JSONField
 
 
 # Create your models here.
@@ -14,3 +15,4 @@ class Video(models.Model):
     video_height = models.IntegerField(null=True)
     video_width = models.IntegerField(null=True)
     video_frame_rate = models.DecimalField(null=True, max_digits=5, decimal_places=2)
+    video_roll_pitch_yaw = JSONField(null=True)

@@ -23,11 +23,11 @@ lib.eyes_in_picture.argtypes = [c_char_p]
 class Point:
 	def __init__(self, x_cord, y_cord):
 		if type(x_cord) == str:
-			self.x = int(x_cord)
+			self.x = int(float(x_cord))
 		else:
 			self.x = x_cord
 		if type(y_cord) == str:
-			self.y = int(y_cord)
+			self.y = int(float(y_cord))
 		else:
 			self.y = y_cord
 

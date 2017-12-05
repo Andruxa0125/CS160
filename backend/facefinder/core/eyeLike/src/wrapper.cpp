@@ -25,7 +25,9 @@ std::string detectAndDisplay( cv::Mat frame );
 
 /** Global variables */
 //-- Note, either copy these two files from opencv/data/haarscascades to your current folder, or change these locations
-cv::String face_cascade_name = "/root/facefinder68/backend/facefinder/core/eyeLike/res/haarcascade_frontalface_alt.xml";
+//cv::String face_cascade_name = "/root/facefinder68/backend/facefinder/core/eyeLike/res/haarcascade_frontalface_alt.xml";
+cv::String face_cascade_name = "/Users/RYaryy/Desktop/Fall2017/CS160/CS160/backend/facefinder/core/eyeLike/res/haarcascade_frontalface_alt.xml";
+//cv::String face_cascade_name = "/Users/temp/projects/CS160/backend/facefinder/core/eyeLike/res/haarcascade_frontalface_alt.xml";
 cv::CascadeClassifier face_cascade;
 std::string main_window_name = "Capture - Face detection";
 std::string face_window_name = "Face Window";
@@ -80,16 +82,54 @@ std::string findEyes(cv::Mat frame_gray, cv::Rect face) {
   rightRightCornerRegion.x += rightPupil.x;
   rightRightCornerRegion.height /= 2;
   rightRightCornerRegion.y += rightRightCornerRegion.height / 2;
+  
+  // std::cout << face.x << " " << face.y << " " << face.width << std::endl;
+  // std::cout << leftEyeRegion.x << " " << leftEyeRegion.y << " " << leftEyeRegion.width << std::endl;
+  // std::cout << leftRightCornerRegion.x << " " << leftRightCornerRegion.y << " " << leftRightCornerRegion.width << std::endl;
+  // std::cout << leftLeftCornerRegion.x << " " << leftLeftCornerRegion.y << " " << leftLeftCornerRegion.width << std::endl;
+  // std::cout << rightEyeRegion.x << " " << rightEyeRegion.y << " " << rightEyeRegion.width << std::endl; 
+  // std::cout << rightLeftCornerRegion.x << " " << rightLeftCornerRegion.y << " " << rightLeftCornerRegion.width << std::endl;
+  // std::cout << rightRightCornerRegion.x << " " << rightRightCornerRegion.y << " " << rightRightCornerRegion.width << std::endl;
+  // std::cout << eye_region_width << std::endl;
+/*
+391 103 369
+47 92 129
+119 119 57
+47 119 72
+192 92 129
+192 119 62
+254 119 67
+129
+*/
   // change eye centers to face coordinates
-  rightPupil.x += rightEyeRegion.x;
-  rightPupil.y += rightEyeRegion.y;
-  leftPupil.x += leftEyeRegion.x;
-  leftPupil.y += leftEyeRegion.y;
+  rightPupil.x  +=  rightEyeRegion.x  + face.x;
+  rightPupil.y  +=  rightEyeRegion.y  + face.y;
+  leftPupil.x   +=  leftEyeRegion.x   + face.x;
+  leftPupil.y   +=  leftEyeRegion.y   + face.y;
+  // flip the coordinates along x-axis
+  int halfwidth = frame_gray.cols / 2;
+  
+  // on right side
+  if (rightPupil.x > halfwidth){
+    int delta = rightPupil.x - halfwidth;
+    rightPupil.x = halfwidth - delta;
+  } else{ // on left side
+    int delta = halfwidth - rightPupil.x;
+    rightPupil.x = halfwidth + delta;
+  }
+  if (leftPupil.x > halfwidth){
+    int delta = leftPupil.x - halfwidth;
+    leftPupil.x = halfwidth - delta;
+  } else{ // on left side
+    int delta = halfwidth - leftPupil.x;
+    leftPupil.x = halfwidth + delta;
+  }
+
   // draw eye centers
-  circle(faceROI, leftPupil, 3, 0);
-  ss << leftPupil.x << "," << leftPupil.y << ";";
-  circle(faceROI, rightPupil, 3, 0);
-  ss << rightPupil.x << "," << rightPupil.y  << "/";
+  //circle(faceROI, leftPupil, 3, 0);
+  //circle(faceROI, rightPupil, 3, 0);
+  ss << leftPupil.x  << "," <<  leftPupil.y   << ";";
+  ss << rightPupil.x << "," <<  rightPupil.y  << "/";
 
   
 
@@ -107,12 +147,12 @@ std::string findEyes(cv::Mat frame_gray, cv::Rect face) {
     cv::Point2f rightRightCorner = findEyeCorner(faceROI(rightRightCornerRegion), false, false);
     rightRightCorner.x += rightRightCornerRegion.x;
     rightRightCorner.y += rightRightCornerRegion.y;
-    circle(faceROI, leftRightCorner, 3, 100);
-    circle(faceROI, leftLeftCorner, 3, 500);
-    circle(faceROI, rightLeftCorner, 3, 200);
-    circle(faceROI, rightRightCorner, 3, 200);
+    // circle(faceROI, leftRightCorner, 3, 100);
+    // circle(faceROI, leftLeftCorner, 3, 500);
+    // circle(faceROI, rightLeftCorner, 3, 200);
+    // circle(faceROI, rightRightCorner, 3, 200);
   }
-  imshow(face_window_name, faceROI);
+  // imshow(face_window_name, faceROI);
   return ss.str();
 }
 
@@ -148,16 +188,11 @@ std::string detectAndDisplay( cv::Mat frame ) {
   cv::Mat frame_gray = rgbChannels[2];
 
   //-- Detect faces
-  face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE|CV_HAAR_FIND_BIGGEST_OBJECT, cv::Size(150, 150) );
-//  findSkin(debugImage);
-
+  face_cascade.detectMultiScale( frame_gray, faces, 1.1, 2, 0|CV_HAAR_SCALE_IMAGE, cv::Size(150, 150) );
+  //std::cout << "Number of Faces found: " << faces.size() << std::endl;
   for( int i = 0; i < faces.size(); i++ ){
     rectangle(debugImage, faces[i], 1234);
   }
-  //-- Show what you got
-  // if (faces.size() > 0) {
-  //   eyes += findEyes(frame_gray, faces[0]);
-  // }
   for (int i = 0; i < faces.size() ; i++){
   	eyes += findEyes(frame_gray, faces[i]);
   }
@@ -169,8 +204,8 @@ std::string detectAndDisplay( cv::Mat frame ) {
 extern "C"
 const char *eyes_in_video(char* name){
 	std::string all_eyes = "";
-	cout<<strlen(name)<<endl;
-	cout<<name<<endl;
+	//cout<<strlen(name)<<endl;
+	//cout<<name<<endl;
 
   	createCornerKernels();
   	ellipse(skinCrCbHist, cv::Point(113, 155.6), cv::Size(23.4, 15.2),
@@ -196,7 +231,6 @@ const char *eyes_in_video(char* name){
 	        	printf(" --(!) No captured frame -- Break!");
 	        	break;
 	      	}
-	      	imshow(main_window_name,debugImage);
 		}
 	}
 	return all_eyes.c_str();
