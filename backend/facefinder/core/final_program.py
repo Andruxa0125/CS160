@@ -27,8 +27,8 @@ def run_video(path_to_video, video=None):
     videoReader.create_audio()
     step_size = int(number_of_frames / THREAD_NUM)
     #print(videoReader.BASE_PICTURE_NAME)
-    if os.environ.get('ENV_VAR') == 'dev':
-        multiprocessing.set_start_method('spawn')
+    # if os.environ.get('ENV_VAR') == 'dev':
+    #     multiprocessing.set_start_method('spawn')
     points_68.global_process(videoReader.resulting_folder_path ,videoReader.BASE_PICTURE_NAME,
     							videoReader.BASE_PICTURE_EXTENSION, step_size)
     yaw_pitch_roll = json.load(open(BASE_DIR + '/media/documents/RESULTS_FOLDER_NAME/data.json'))
@@ -41,4 +41,5 @@ def run_video(path_to_video, video=None):
 
 if __name__ == "__main__":
     run_video(path)
+
 

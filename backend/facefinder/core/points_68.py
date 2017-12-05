@@ -8,7 +8,7 @@ import os
 import sys
 from multiprocessing import Process
 import time
-from eyeLike.eyeLike import *
+from .eyeLike.eyeLike import *
 import re
 import json
 

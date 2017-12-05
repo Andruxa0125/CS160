@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import multiprocessing
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -154,3 +155,6 @@ if os.environ.get('ENV_VAR') == 'prod':
     AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
     MEDIA_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
+
+if os.environ.get('ENV_VAR') == 'dev':
+    multiprocessing.set_start_method('spawn')
