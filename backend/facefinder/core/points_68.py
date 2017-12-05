@@ -77,7 +77,7 @@ class ImageProcessor():
         args: a full path to the picture
         """
         # Pupil Finding here
-        #pupils = get_eye_locations_in_image(pic_path)
+        pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
         print (pic_path)
         print(os.path.exists(pic_path))
