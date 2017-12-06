@@ -12,7 +12,6 @@ from .eyeLike.eyeLike import *
 import re
 import json
 
-#from eyeLike.eyeLike import *
 
 
 dirname, filename = os.path.split(os.path.abspath(__file__))
@@ -20,16 +19,12 @@ dirname, filename = os.path.split(os.path.abspath(__file__))
 predictor_name = "shape_predictor_68_face_landmarks.dat"
 predictor_path = os.path.join(dirname, predictor_name)
 
-#print ("real path is " + dirname)
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(predictor_path)
 
 THREADS_NUM = 4
 CURRENT_THREAD_NUM = -1
 STEP_SIZE = 1
-
-# got this data by testing. It is length of jawline to length of line connecting 14 and 7.
-PROPORTION = 1.02
 
 # x from left to right
 # y from top to bottom
@@ -79,8 +74,6 @@ class ImageProcessor():
         # Pupil Finding here
         pupils = get_eye_locations_in_image(pic_path)
         img = cv2.imread(pic_path)
-        #print (pic_path)
-        #print(os.path.exists(pic_path))
         frame_number = int(re.findall(r'\d+', pic_path.split('/')[-1])[0])
         dets = detector(img)
         shape = None
@@ -118,7 +111,6 @@ class ImageProcessor():
             #print("yaw is " + str(yaw) + ' angles')
             pitch = findPitch(pointList)
             #print("pitch is " + str(pitch) + ' angles')
-            calculateProportion(pointList)
             self.data[frame_number] = [roll, yaw, pitch]
             counter = 0
             for point in pointList:
@@ -222,12 +214,9 @@ def global_process(path_to_pics, base_name, extension, step_size):
         if(i == 3):
             following = following + 4
         print("Process " + str(i) + " has started")
-        #print("Process " + str(i) + " has started")
-        #CURRENT_THREAD_NUM = i + 1
 
-        #print("current thread num is " + str(i + 1))
         reader = ImageProcessor(path_to_pics, base_name, extension, i + 1)
-        print("Thread " + str(i) + " passing begin index " + str(begin) + " and end " + str(following) + '\n')
+        print("Process " + str(i) + " passing begin index " + str(begin) + " and end " + str(following) + '\n')
 
         proc = Process(target = reader.process_images, args = (begin, following,))
         processList.append(proc)
@@ -265,7 +254,8 @@ def findRoll(pts):
     # from radians to degrees
     return roll*57.2958
 
-def findYaw(pts):#, verbose):
+def findYaw(pts):
+    #came up with this method with a help of a colleague.
     leftPt = pts[0]
     leftTear = pts[39]
     rightPt = pts[16]
@@ -283,31 +273,46 @@ def findYaw(pts):#, verbose):
     yaw *= 180 / np.pi
     return yaw
 
-def findPitch(pts):#, verbose):
-    coef = calculateProportion(pts)
-    result = 1
-    #if(coef < PROPORTION):
-    #    result = -1
-    t = (coef - PROPORTION)*155
-    if(t > 45 or t < -45):
-        t = 25*t/abs(t)
-    return t
+def findPitch(pts):
 
+    #came up with this method with a help of a colleague.
+    leftChin = pts[7]
+    centerChin = pts[8]
+    rightChin = pts[9]
 
-def calculateProportion(pts):
-    eyeLine = pts[15].x - pts[19].x
-    jawline = math.sqrt((pts[14].x-pts[7].x)**2 + (pts[14].y-pts[7].y)**2)
-    #print("proportion is " + str(jawline/eyeLine))
-    return jawline/eyeLine
+    leftChinEdge = Point(centerChin.x - leftChin.x, centerChin.y - leftChin.y)
+    leftChinMag = np.sqrt(leftChinEdge.x**2 + leftChinEdge.y**2)
+
+    rightChinEdge = Point(rightChin.x - centerChin.x, rightChin.y - centerChin.y)
+    rightChinMag = np.sqrt(rightChinEdge.x**2 + rightChinEdge.y**2)
+
+    #edge calculations
+    leftPt = pts[0]
+    leftPt2 = pts[1]
+    leftEdge = Point(leftPt.x - leftPt2.x, leftPt.y - leftPt2.y)
+    leftEdgeMag = np.sqrt(leftEdge.x**2 + leftEdge.y**2)
+
+    rightPt = pts[16]
+    rightPt2 = pts[15]
+    rightEdge = Point(rightPt.x - rightPt2.x, rightPt.y - rightPt2.y)
+    rightEdgeMag = np.sqrt(rightEdge.y**2 + rightEdge.y**2)
+
+    # take average
+    edgeMag = (leftEdgeMag + rightEdgeMag) / 2
+    chinMag = (leftChinMag + rightChinMag) / 2
+
+    pitch = chinMag / edgeMag 
+    pitch *= 180 / np.pi # to degrees
+    return pitch
 
 if __name__ == "__main__":
     start_time = time.time()
-    # reader = ImageProcessor('/home/andrey/test', 'pic', 'jpg')
-    # reader.process_images(1,12)
-    # elapsed_time = time.time() - start_time
-    # drop_data('/home/andrey/test')
-    # print("Sequential execution took %s seconds" % str(elapsed_time))
-    reader = ImageProcessor('/Users/temp/projects/CS160/backend/facefinder/core/eyeLike/data', 'pic', 'jpg')
-    reader.process_images(1,2)
+    reader = ImageProcessor('/home/andrey/test', 'pic', 'jpg')
+    reader.process_images(1,6)
     elapsed_time = time.time() - start_time
+    #drop_data('/home/andrey/test')
     print("Sequential execution took %s seconds" % str(elapsed_time))
+    # reader = ImageProcessor('/Users/temp/projects/CS160/backend/facefinder/core/eyeLike/data', 'pic', 'jpg')
+    # reader.process_images(1,5)
+    # elapsed_time = time.time() - start_time
+    # print("Sequential execution took %s seconds" % str(elapsed_time))

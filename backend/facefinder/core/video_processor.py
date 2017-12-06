@@ -6,9 +6,6 @@ import shutil
 import sys
 import glob
 import cv2
-#https://stackoverflow.com/questions/9913032/ffmpeg-to-extract-audio-from-video
-#ffmpeg -r 20.0 -start_number 1 -f image2 -i "pic%d.png" -vcodec mjpeg -i sample.mp3 -qscale 1 attempt.avi
-# get audio from video ffmpeg -i input-video.avi -vn -acodec copy output-audio.aac
 
 class videoReader():
 
