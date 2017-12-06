@@ -58,7 +58,8 @@ RUN cd /root/facefinder68/backend/facefinder/core/eyeLike && \
 RUN cd /root/facefinder68 && \
     pip3 install -r requirements.txt
 
-#RUN apt-get install xvfb -y && apt-get install xserver-xorg-core xserver-xorg-input-all \
+RUN apt-get install xvfb -y
+#&& apt-get install xserver-xorg-core xserver-xorg-input-all \
 #xserver-xorg-video-fbdev libx11-6 x11-common \
 #x11-utils x11-xkb-utils x11-xserver-utils -y
 
